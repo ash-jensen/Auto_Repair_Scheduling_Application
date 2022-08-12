@@ -43,12 +43,16 @@ public class CustomersForm implements Initializable {
     public TextField CustPhoneNumberField;
     public TextField CustIdField;
     public TextField CustNameField;
+    public TableColumn CustTableVin;
+    public TextField CustConcernField;
+    public TextField CustVinField;
     private Customer customer;
     private int id;
     private String name;
     private String address;
     private String postalCode;
     private String phoneNumber;
+    private String vin;
     private int countryId;
     private int divId;
     private ObservableList<Country> countryList;
@@ -86,6 +90,8 @@ public class CustomersForm implements Initializable {
                 CustPostalCodeField.setText(postalCode);
                 phoneNumber = customer.getPhoneNumber();
                 CustPhoneNumberField.setText(phoneNumber);
+                vin = customer.getVin();
+                CustVinField.setText(vin);
                 divId = customer.getDivId();
                 // Find country that division belongs to and get it's id
                 Country matchingCountry = CountryDAO.getCountryByDiv(divId);
@@ -121,6 +127,7 @@ public class CustomersForm implements Initializable {
         CustTableAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         CustTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         CustTablePhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        CustTableVin.setCellValueFactory(new PropertyValueFactory<>("vin"));
         CustTableDivId.setCellValueFactory(new PropertyValueFactory<>("divId"));
     }
 
@@ -185,11 +192,12 @@ public class CustomersForm implements Initializable {
             address = CustAddressField.getText();
             postalCode = CustPostalCodeField.getText();
             phoneNumber = CustPhoneNumberField.getText();
+            vin = CustVinField.getText();
             divId = ((Division)CustDivIdComboBox.getSelectionModel().getSelectedItem()).getDivId();
 
 
             // If custId > 0 returned, repopulate table and inform user of success
-            int custId = CustomerDAO.addCustomer(name, address, postalCode, phoneNumber, divId);
+            int custId = CustomerDAO.addCustomer(name, address, postalCode, phoneNumber, vin, divId);
             if (custId > 0) {
                 populateCustTable();
                 // Confirm customer added
@@ -226,10 +234,11 @@ public class CustomersForm implements Initializable {
             address = CustAddressField.getText();
             postalCode = CustPostalCodeField.getText();
             phoneNumber = CustPhoneNumberField.getText();
+            vin = CustVinField.getText();
             divId = ((Division)CustDivIdComboBox.getSelectionModel().getSelectedItem()).getDivId();
 
             // If customer updated in database, repopulate table and inform user of success
-            if (CustomerDAO.updateCustomer(id, name, address, postalCode, phoneNumber, divId) > 0) {
+            if (CustomerDAO.updateCustomer(id, name, address, postalCode, phoneNumber, vin, divId) > 0) {
                 // Repopulate table
                 populateCustTable();
 
@@ -297,8 +306,9 @@ public class CustomersForm implements Initializable {
     public void ClearButtonAction(ActionEvent actionEvent) {
         CustIdField.clear();
         CustNameField.clear();
-        CustPhoneNumberField.clear();
         CustAddressField.clear();
+        CustPhoneNumberField.clear();
+        CustVinField.clear();
         CustCountryIdComboBox.getSelectionModel().clearSelection();
         CustDivIdComboBox.getItems().clear();
         CustPostalCodeField.clear();
@@ -352,8 +362,9 @@ public class CustomersForm implements Initializable {
     public boolean emptyFieldCheck() {
         boolean hasText = true;
         if ((CustNameField.getText().isBlank()) || (CustPhoneNumberField.getText().isBlank())
-            || (CustAddressField.getText().isBlank()) || (CustCountryIdComboBox.getSelectionModel().isEmpty())
-            || (CustDivIdComboBox.getSelectionModel().isEmpty()) || (CustPostalCodeField.getText().isBlank())) {
+            || (CustVinField.getText().isBlank()) || (CustAddressField.getText().isBlank())
+            || (CustCountryIdComboBox.getSelectionModel().isEmpty()) || (CustDivIdComboBox.getSelectionModel().isEmpty())
+            || (CustPostalCodeField.getText().isBlank())) {
             Alert alert;
 
             alert = new Alert(Alert.AlertType.ERROR);

@@ -28,6 +28,10 @@ public class Customer {
      */
     private String phoneNumber;
     /**
+     * Variable to hold String vin.
+     */
+    private String vin;
+    /**
      * Variable to hold integer of division id.
      */
     private int divId;
@@ -39,14 +43,16 @@ public class Customer {
      * @param address sets String address
      * @param postalCode sets String postalCode
      * @param phoneNumber sets String phoneNumber
+     * @param vin sets String vin
      * @param divId sets integer divId
      */
-    public Customer( int id, String name, String address, String postalCode, String phoneNumber, int divId) {
+    public Customer( int id, String name, String address, String postalCode, String phoneNumber, String vin, int divId) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
+        this.vin = vin;
         this.divId = divId;
     }
 
@@ -88,6 +94,14 @@ public class Customer {
      */
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    /**
+     * This method returns vin.
+     * @return String vin.
+     */
+    public String getVin() {
+        return vin;
     }
 
     /**
@@ -136,6 +150,13 @@ public class Customer {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /** This method sets vin variable to vin parameter.
+     * @param vin sets String vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 
     /**

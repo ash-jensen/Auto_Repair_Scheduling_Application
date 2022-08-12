@@ -333,7 +333,7 @@ public class AppointmentForm implements Initializable {
         // Load Customers Page
         Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 585);
+        Scene scene = new Scene(root, 1100, 585);
         stage.setTitle("Customers");
         stage.setScene(scene);
         stage.show();

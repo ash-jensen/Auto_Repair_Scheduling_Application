@@ -49,8 +49,9 @@ public abstract class CustomerDAO {
                 String custAddress = rs.getString("Address");
                 String custPostalCode = rs.getString("Postal_Code");
                 String custPhoneNumber = rs.getString("Phone");
+                String custVin = rs.getString("VIN");
                 int custDivId = rs.getInt("Division_ID");
-                Customer cust = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custDivId);
+                Customer cust = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
                 customerList.add(cust);
             }
         }
@@ -72,12 +73,12 @@ public abstract class CustomerDAO {
      * @param divId integer division id to add to the customer in the database
      * @return integer custId
      */
-    public static int addCustomer(String name, String address, String postalCode, String phoneNumber, int divId) {
+    public static int addCustomer(String name, String address, String postalCode, String phoneNumber, String vin, int divId) {
         int custId = 0;
 
         try {
             // SQL statement to insert customer in customers table
-            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, VIN, Division_ID) VALUES (?, ?, ?, ?, ?)";
 
             // Get connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -87,7 +88,8 @@ public abstract class CustomerDAO {
             ps.setString(2, address);
             ps.setString(3, postalCode);
             ps.setString(4, phoneNumber);
-            ps.setInt(5, divId);
+            ps.setString(5, vin);
+            ps.setInt(6, divId);
 
             // Execute the insert, get returned customer id
             ps.execute();
@@ -116,7 +118,7 @@ public abstract class CustomerDAO {
      * @param divId integer division id to update the customer in the database
      * @return integer rowsAffected
      */
-    public static int updateCustomer(int custId, String name, String address, String postalCode, String phoneNumber, int divId) {
+    public static int updateCustomer(int custId, String name, String address, String postalCode, String phoneNumber, String vin, int divId) {
         Alert alert;
         int rowsAffected = 0;
 
@@ -125,7 +127,7 @@ public abstract class CustomerDAO {
         if(result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 // SQL statement to update customer with given customer id
-                String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+                String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, VIN = ?, Division_ID = ? WHERE Customer_ID = ?";
 
                 // Get connection to DB and send over the SQL
                 PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -135,8 +137,9 @@ public abstract class CustomerDAO {
                 ps.setString(2, address);
                 ps.setString(3, postalCode);
                 ps.setString(4, phoneNumber);
-                ps.setInt(5, divId);
-                ps.setInt(6, custId);
+                ps.setString(5, vin);
+                ps.setInt(6, divId);
+                ps.setInt(7, custId);
 
                 // Execute the update, assign num of rows affected to var to return
                 rowsAffected = ps.executeUpdate();
@@ -225,8 +228,9 @@ public abstract class CustomerDAO {
             String custAddress = rs.getString("Address");
             String custPostalCode = rs.getString("Postal_Code");
             String custPhoneNumber = rs.getString("Phone");
+            String custVin = rs.getString("VIN");
             int custDivId = rs.getInt("Division_ID");
-            customer = new Customer(custIdToFind, custName, custAddress, custPostalCode, custPhoneNumber, custDivId);
+            customer = new Customer(custIdToFind, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
