@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="350.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginForm">
+   <children>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="350.0" spacing="5.0">
+         <children>
+            <Label fx:id="SignInLabel" alignment="CENTER" text="Sign In">
+               <font>
+                  <Font name="Arial Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="UserNameLabel" text="User Name">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="UserNameField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" promptText="User Name">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label fx:id="PasswordLabel" text="Password">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="PasswordField" minHeight="-Infinity" prefHeight="36.0" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox alignment="CENTER" prefHeight="21.0" prefWidth="307.0">
+               <children>
+                  <Button fx:id="SignInButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#SIButtonAction" prefHeight="36.0" prefWidth="149.0" style="-fx-background-color: #2a70c7#2a70c7;" text="Sign In" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="25.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="22.0" prefWidth="307.0">
+               <children>
+                  <Label fx:id="Location" text="Location" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
