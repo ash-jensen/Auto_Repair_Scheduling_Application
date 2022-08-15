@@ -88,7 +88,7 @@ public class ReportsForm implements Initializable {
         // Load Schedule Page
         Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 653);
+        Scene scene = new Scene(root, 900, 624);
         stage.setTitle("Appointments");
         stage.setScene(scene);
         stage.show();

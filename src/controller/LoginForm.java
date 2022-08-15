@@ -97,7 +97,7 @@ public class LoginForm implements Initializable {
                 // Load Schedule Page
                 Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
 
-                Scene scene = new Scene(root, 900, 653);
+                Scene scene = new Scene(root, 900, 624);
                 stage.setTitle("Appointment");
                 stage.setScene(scene);
                 stage.show();

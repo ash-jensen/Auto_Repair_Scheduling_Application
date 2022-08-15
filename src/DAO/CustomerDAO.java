@@ -78,7 +78,7 @@ public abstract class CustomerDAO {
 
         try {
             // SQL statement to insert customer in customers table
-            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, VIN, Division_ID) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, VIN, Division_ID) VALUES (?, ?, ?, ?, ?, ?)";
 
             // Get connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

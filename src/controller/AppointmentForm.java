@@ -86,7 +86,7 @@ public class AppointmentForm implements Initializable {
     private Timestamp startTimestamp;
     private Timestamp endTimestamp;
     ObservableList<Customer> customerList = observableArrayList();
-    ObservableList<Tech> TechList = observableArrayList();
+    ObservableList<Tech> techList = observableArrayList();
     ObservableList<Advisor> advisorList = observableArrayList();
 
     /**
@@ -248,9 +248,9 @@ public class AppointmentForm implements Initializable {
         CustomerComboBox.setItems(customerList);
 
         // Fill Tech combo box
-        TechList = TechDAO.getTechData();
+        techList = TechDAO.getTechData();
         TechComboBox.setVisibleRowCount(5);
-        TechComboBox.setItems(TechList);
+        TechComboBox.setItems(techList);
 
         // Fill Advisor combo box
         advisorList = AdvisorDAO.getAdvisorData();

@@ -43,8 +43,9 @@ public abstract class TechDAO {
             while (rs.next()) {
                 int techId = rs.getInt("Tech_ID");
                 String techName = rs.getString("Tech_Name");
+                String techType = rs.getString("Tech_Type");
                 String email = rs.getString("Email");
-                Tech tech = new Tech(techId, techName, email);
+                Tech tech = new Tech(techId, techName, techType, email);
                 techList.add(tech);
             }
         } catch (SQLException throwables) {
@@ -74,9 +75,10 @@ public abstract class TechDAO {
 
             // Set bind variables to create tech object
             rs.next();
-            String techName = rs.getString("tech_Name");
+            String techName = rs.getString("Tech_Name");
+            String techType = rs.getString("Tech_Type");
             String email = rs.getString("Email");
-            tech = new Tech(techIdToFind, techName, email);
+            tech = new Tech(techIdToFind, techName, techType, email);
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();

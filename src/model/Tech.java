@@ -15,9 +15,14 @@ public class Tech {
      */
     private String name;
     /**
+     * Variable used to hold String type.
+     */
+    private String type;
+    /**
      * Variable used to hold String email.
      */
     private String email;
+
 
     /**
      * This is the contact constructor with id, name, and email.
@@ -25,10 +30,11 @@ public class Tech {
      * @param name sets String name
      * @param email sets String email
      */
-    public Tech(int id, String name, String email) {
+    public Tech(int id, String name, String type, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.type = type;
     }
 
     /**
@@ -64,6 +70,22 @@ public class Tech {
     }
 
     /**
+     * This method returns type String.
+     * @return String type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * This mehtod sets type variable to type parameter.
+     * @param type sets String type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
      * This method returns email string.
      * @return String email
      */
@@ -85,7 +107,7 @@ public class Tech {
      */
     @Override
     public String toString() {
-        return ( id + " - " + name);
+        return ( id + " - " + name + " - " + type);
     }
 
 }
