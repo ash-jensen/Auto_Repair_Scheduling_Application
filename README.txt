@@ -1,10 +1,10 @@
 Appointment Scheduler
 
 The purpose of the appointment scheduler is to provide a GUI based appointment scheduling application for a global
-consulting organization.  The password protected application gives the user the ability to create/update/delete customers
-and appointments from the company's chosen database system.  The application gives warning to a user if there is an
-appointment within 15 minutes of the user's login, and shows them the appointment information should an appointment exist.
-The user is also able to view reports about the number of customers, the number of appointments a given contact has, and
+consulting organization.  The password protected application gives the advisor the ability to create/update/delete customers
+and appointments from the company's chosen database system.  The application gives warning to a advisor if there is an
+appointment within 15 minutes of the advisor's login, and shows them the appointment information should an appointment exist.
+The advisor is also able to view reports about the number of customers, the number of appointments a given tech has, and
 how many appointments of a certain type are in a chosen month. The appointment scheduler provides various error checking
 and confirmations throughout, including if form fields are not fully filled out or confirming before a delete takes place.
 
@@ -31,4 +31,4 @@ Directions:
 7. Exit program by clicking Exit button and confirming exit, or by clicking X in upper right-hand corner
 
 Report Description for A3f:
-This report tells the user how many customers are currently saved in the database.
+This report tells the advisor how many customers are currently saved in the database.

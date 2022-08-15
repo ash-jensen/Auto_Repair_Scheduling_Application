@@ -1,7 +1,7 @@
 package controller;
 
 import DAO.AppointmentsDAO;
-import DAO.UserDAO;
+import DAO.AdvisorDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,14 +26,14 @@ import java.util.ResourceBundle;
  * @author Ashley Jensen
  */
 public class LoginForm implements Initializable {
-    public TextField UserNameField;
+    public TextField AdvisorNameField;
     public TextField PasswordField;
     public Label Location;
     public Button SignInButton;
     public Label SignInLabel;
-    public Label UserNameLabel;
+    public Label AdvisorNameLabel;
     public Label PasswordLabel;
-    private String userName;
+    private String advisorName;
     private String password;
     private String zone = ZoneId.systemDefault().toString();
     ResourceBundle langBundle = ResourceBundle.getBundle("bundle/lang", Locale.getDefault());
@@ -53,8 +53,8 @@ public class LoginForm implements Initializable {
         // If locale language is French, translate page
         if (Locale.getDefault().getLanguage().equals("fr") ) {
             SignInLabel.setText(langBundle.getString("Login"));
-            UserNameLabel.setText(langBundle.getString("UserName"));
-            UserNameField.setText(langBundle.getString("UserName"));
+            AdvisorNameLabel.setText(langBundle.getString("advisorName"));
+            AdvisorNameField.setText(langBundle.getString("advisorName"));
             PasswordLabel.setText(langBundle.getString("Password"));
             PasswordField.setText(langBundle.getString("Password"));
             SignInButton.setText(langBundle.getString("Login"));
@@ -64,7 +64,7 @@ public class LoginForm implements Initializable {
     }
 
     /**
-     * This method checks to make sure the username and password fields are not empty, then checks for valid login
+     * This method checks to make sure the advisorName and password fields are not empty, then checks for valid login
      * information and logs info to login_activity.txt. If the login is valid, it then makes a call to apptLoginCheck to check for appointments for the logged
      * on user, and then loads AppointmentForm. If not valid login, it informs user to try again.
      * @param actionEvent SignIn button click
@@ -72,10 +72,10 @@ public class LoginForm implements Initializable {
      */
     public void SIButtonAction(ActionEvent actionEvent) throws IOException {
         // Check for empty fields and check login info
-        if ((!UserNameField.getText().isEmpty()) && (!PasswordField.getText().isEmpty())) {
-            userName = UserNameField.getText();
+        if ((!AdvisorNameField.getText().isEmpty()) && (!PasswordField.getText().isEmpty())) {
+            advisorName = AdvisorNameField.getText();
             password = PasswordField.getText();
-            if (UserDAO.checkLoginInfo(userName, password)) {
+            if (AdvisorDAO.checkLoginInfo(advisorName, password)) {
                 Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
                 stage.hide();
 
@@ -87,7 +87,7 @@ public class LoginForm implements Initializable {
                     PrintWriter pw = new PrintWriter(new FileOutputStream(
                             new File("login_activity.txt"),
                             true /* append = true */));
-                    pw.append("Valid Login: " + userName + " at time: " + LocalDateTime.now() + "\n");
+                    pw.append("Valid Login: " + advisorName + " at time: " + LocalDateTime.now() + "\n");
                     pw.flush();
                     pw.close();
                 } catch (FileNotFoundException ex) {
@@ -108,7 +108,7 @@ public class LoginForm implements Initializable {
                     PrintWriter pw = new PrintWriter(new FileOutputStream(
                             new File("login_activity.txt"),
                             true /* append = true */));
-                    pw.append("Invalid login by user: " + userName + " at time: " + LocalDateTime.now() + "\n");
+                    pw.append("Invalid login by user: " + advisorName + " at time: " + LocalDateTime.now() + "\n");
                     pw.flush();
                     pw.close();
                 } catch (FileNotFoundException ex) {
@@ -129,7 +129,7 @@ public class LoginForm implements Initializable {
                 PrintWriter pw = new PrintWriter(new FileOutputStream(
                         new File("login_activity.txt"),
                         true /* append = true */));
-                pw.append("Invalid login by user: " + userName + " at time: " + LocalDateTime.now() + "\n");
+                pw.append("Invalid login by user: " + advisorName + " at time: " + LocalDateTime.now() + "\n");
                 pw.flush();
                 pw.close();
             } catch (FileNotFoundException ex) {

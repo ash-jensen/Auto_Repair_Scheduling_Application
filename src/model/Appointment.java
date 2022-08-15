@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * This class makes Appointment objects and includes getters/setters for id, custId, userId, contactId, title, description, location, type,
+ * This class makes Appointment objects and includes getters/setters for id, custId, advisorId, techId, title, concerns, location, type,
  * startTimestamp, and endTimestamp.
  *
  * @author Ashley Jensen
@@ -26,29 +26,17 @@ public class Appointment {
      */
     private int custId;
     /**
-     * Variable used to hold integer of user id.
+     * Variable used to hold integer of advisor id.
      */
-    private int userId;
+    private int advisorId;
     /**
-     * Variable used to hold integer of contact id.
+     * Variable used to hold integer of tech id.
      */
-    private int contactId;
+    private int techId;
     /**
      * Variable used to hold the String title of an appointment.
      */
-    private String title;
-    /**
-     * Variable used to hold the String of description of an appointment.
-     */
-    private String description;
-    /**
-     * Variable used to hold the String of location of an appointment.
-     */
-    private String location;
-    /**
-     * Variable used to hold the String of type of appointment.
-     */
-    private String type;
+    private String concerns;
     /**
      * Variable used to hold the Timestamp of start of an appointment.
      */
@@ -75,28 +63,22 @@ public class Appointment {
     private static ObservableList<String> monthsOfYear = observableArrayList();
 
     /**
-     * This is the Appointment constructor with id, custId, userId, contactId, title, description, location, type,
+     * This is the Appointment constructor with id, custId, advisorId, techId, title, concerns, location, type,
      * startTimestamp, and endTimestamp.
      * @param id sets integer id
      * @param custId sets integer custId
-     * @param userId sets integer userId
-     * @param contactId sets integer contactId
-     * @param title sets String title
-     * @param description sets String description
-     * @param location sets String location
-     * @param type sets String type
+     * @param advisorId sets integer advisorId
+     * @param techId sets integer techId
+     * @param concerns sets String concerns
      * @param startTimestamp sets Timestamp startTimestamp
      * @param endTimestamp sets Timestamp endTimestamp
      */
-    public Appointment(int id, int custId, int userId, int contactId, String title, String description, String location, String type, Timestamp startTimestamp, Timestamp endTimestamp) {
+    public Appointment(int id, int custId, int advisorId, int techId, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
         this.id = id;
-        this. custId = custId;
-        this.userId = userId;
-        this.contactId = contactId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
+        this.custId = custId;
+        this.advisorId = advisorId;
+        this.techId = techId;
+        this.concerns = concerns;
         this.startTimestamp = startTimestamp;
         this.endTimestamp = endTimestamp;
     }
@@ -118,19 +100,19 @@ public class Appointment {
     }
 
     /**
-     * This method returns contactId.
-     * @return integer contactId
+     * This method returns techId.
+     * @return integer techId
      */
-    public int getContactId() {
-        return contactId;
+    public int getTechId() {
+        return techId;
     }
 
     /**
-     * This method sets contactId variable to contactId parameter.
-     * @param contactId sets integer contactId
+     * This method sets techId variable to techId parameter.
+     * @param techId sets integer techId
      */
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public void setTechId(int techId) {
+        this.techId = techId;
     }
 
     /**
@@ -150,19 +132,35 @@ public class Appointment {
     }
 
     /**
-     * This method returns description.
-     * @return String description.
+     * This method returns advisorId
+     * @return integer advisorId
      */
-    public String getDescription() {
-        return description;
+    public int getAdvisorId() {
+        return advisorId;
     }
 
     /**
-     * This method sets description variable to description parameter.
-     * @param description sets string description
+     * This method sets advisorId variable to advisorId parameter.
+     * @param advisorId sets integer advisorId
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAdvisorId(int advisorId) {
+        this.advisorId = advisorId;
+    }
+
+    /**
+     * This method returns concerns.
+     * @return String concerns.
+     */
+    public String getConcerns() {
+        return concerns;
+    }
+
+    /**
+     * This method sets concerns variable to concerns parameter.
+     * @param concerns sets string concerns
+     */
+    public void setConcerns(String concerns) {
+        this.concerns = concerns;
     }
 
     /**
@@ -193,22 +191,6 @@ public class Appointment {
     }
 
     /**
-     * This method returns location.
-     * @return String location.
-     */
-    public String getLocation() {
-        return location;
-    }
-
-    /**
-     * This method sets location variable to location parameter.
-     * @param location sets string location
-     */
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    /**
      * This method returns startTimestamp
      * @return Timestamp startTimestamp
      */
@@ -233,54 +215,6 @@ public class Appointment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         startString = startDateTime.format(formatter);
         return startString;
-    }
-
-    /**
-     * This method returns title.
-     * @return String title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * This method sets title variable to title parameter.
-     * @param title sets String title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * This method returns type.
-     * @return String type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * This method sets type variable to type parameter.
-     * @param type sets String type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * This method returns userId
-     * @return integer userId
-     */
-    public int getUserId() {
-        return userId;
-    }
-
-    /**
-     * This method sets userId variable to userId parameter.
-     * @param userId sets integer userId
-     */
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     /**

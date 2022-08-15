@@ -1,7 +1,7 @@
 package controller;
 
 import DAO.AppointmentsDAO;
-import DAO.ContactDAO;
+import DAO.TechDAO;
 import DAO.CustomerDAO;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Contact;
+import model.Tech;
 import model.Customer;
 
 import java.io.IOException;
@@ -31,25 +31,21 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Ashley Jensen
  */
 public class ReportsForm implements Initializable {
-    public ComboBox ApptTypeComboBox;
     public ComboBox MonthComboBox;
     public Label NumberOfAppointmentsLabel;
     public TableView ApptsTable;
     public TableColumn ApptIdCol;
     public TableColumn CustIdCol;
-    public TableColumn UserIdCol;
-    public TableColumn ContactIdCol;
-    public TableColumn TitleCol;
-    public TableColumn LocationCol;
+    public TableColumn AdvisorIdCol;
+    public TableColumn TechIdCol;
     public TableColumn StartDateTimeCol;
     public TableColumn EndDateTimeCol;
-    public TableColumn TypeCol;
-    public TableColumn DescriptionCol;
-    public ComboBox ContactComboBox;
+    public TableColumn ConcernsCol;
+    public ComboBox TechComboBox;
     public Label CustomerNumbers;
     private ObservableList<String> monthsOfYear = observableArrayList();
     private ObservableList<String> apptTypeList = observableArrayList();
-    private ObservableList<Contact> contactList = observableArrayList();
+    private ObservableList<Tech> techList = observableArrayList();
     private ObservableList<Customer> customerList = observableArrayList();
 
     /**
@@ -77,15 +73,10 @@ public class ReportsForm implements Initializable {
         MonthComboBox.setVisibleRowCount(12);
         MonthComboBox.setItems(monthsOfYear);
 
-        // Fill appointment type comob box
-        apptTypeList = Appointment.getAllApptTypes();
-        ApptTypeComboBox.setVisibleRowCount(5);
-        ApptTypeComboBox.setItems(apptTypeList);
-
-        // Fill contact combo box
-        contactList = ContactDAO.getContactData();
-        ContactComboBox.setVisibleRowCount(5);
-        ContactComboBox.setItems(contactList);
+        // Fill tech combo box
+        techList = TechDAO.getTechData();
+        TechComboBox.setVisibleRowCount(5);
+        TechComboBox.setItems(techList);
     }
 
     /**
@@ -134,11 +125,14 @@ public class ReportsForm implements Initializable {
         }
     }
 
+
+// **** FIX ME ******
     /**
      * This method gets input from month/appointment type combo boxes and calls getNumAppts from AppointmentsDAO to
      * return number of appointments matching that month and appointment type, otherwise alerts nothing found.
      * @param actionEvent on OK button click
      */
+    /*
     public void NumApptsOkayButtonAction(ActionEvent actionEvent) {
 
         Alert alert;
@@ -148,7 +142,6 @@ public class ReportsForm implements Initializable {
         // Get field values
         month = (String)MonthComboBox.getSelectionModel().getSelectedItem();
         apptType = (String)ApptTypeComboBox.getSelectionModel().getSelectedItem();
-
 
         // If appointment found, show in number of appointments label
         int apptNum = AppointmentsDAO.getNumAppts(month, apptType);
@@ -163,36 +156,34 @@ public class ReportsForm implements Initializable {
             alert.showAndWait();
         }
     }
+    */
 
     /**
-     * This method gets the contactId of the chosen contact and gets the appointments scheduled for them, then fills
+     * This method gets the techId of the chosen contact and gets the appointments scheduled for them, then fills
      * the table with the information.
      * @param actionEvent on OK button click
      */
     public void ContactSchedOkayButtonAction(ActionEvent actionEvent) {
         Alert alert;
-        ObservableList<Appointment> contactList = observableArrayList();
+        ObservableList<Appointment> techList = observableArrayList();
 
         // Get selection
-        int contactId = ((Contact)ContactComboBox.getSelectionModel().getSelectedItem()).getId();
+        int techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
 
         // Get returned contact list by id
-        contactList = AppointmentsDAO.getContactApptData(contactId);
+        techList = AppointmentsDAO.getTechApptData(techId);
 
         // If contacts returned, fill table, else warn user none found
-        if (contactList.size() > 0) {
+        if (techList.size() > 0) {
             // Populate Appointments table on schedule form
-            ApptsTable.setItems(contactList);
+            ApptsTable.setItems(techList);
             ApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             CustIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
-            UserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-            ContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-            TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-            LocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            AdvisorIdCol.setCellValueFactory(new PropertyValueFactory<>("advisorId"));
+            TechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
             StartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
             EndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-            TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-            DescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+            ConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
         }
         else {
             // Alert user: no appointments found

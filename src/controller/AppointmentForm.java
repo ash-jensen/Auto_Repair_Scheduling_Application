@@ -1,9 +1,9 @@
 package controller;
 
 import DAO.AppointmentsDAO;
-import DAO.ContactDAO;
+import DAO.TechDAO;
 import DAO.CustomerDAO;
-import DAO.UserDAO;
+import DAO.AdvisorDAO;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,10 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Advisor;
 import model.Appointment;
-import model.Contact;
+import model.Tech;
 import model.Customer;
-import model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +29,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static javafx.collections.FXCollections.observableArrayList;
-// THIS IS THE NEW PROJECT
 
 /**
  * This class creates AppointmentForm. You use this to view, add, update, and delete appointments.
@@ -41,72 +40,60 @@ public class AppointmentForm implements Initializable {
     public TableView AllApptsTable;
     public TableColumn AllApptIdCol;
     public TableColumn AllCustIdCol;
-    public TableColumn AllUserIdCol;
-    public TableColumn AllContactIdCol;
-    public TableColumn AllTitleCol;
-    public TableColumn AllLocationCol;
+    public TableColumn AllAdvisorIdCol;
+    public TableColumn AllTechIdCol;
     public TableColumn AllStartDateTimeCol;
     public TableColumn AllEndDateTimeCol;
-    public TableColumn AllTypeCol;
-    public TableColumn AllDescriptionCol;
     public TableView CurrMonthTable;
     public TableColumn CurrMonthApptIdCol;
     public TableColumn CurrMonthCustIdCol;
-    public TableColumn CurrMonthUserIdCol;
-    public TableColumn CurrMonthContactIdCol;
-    public TableColumn CurrMonthTitleCol;
-    public TableColumn CurrMonthLocationCol;
+    public TableColumn CurrMonthAdvisorIdCol;
+    public TableColumn CurrMonthTechIdCol;
     public TableColumn CurrMonthStartDateTimeCol;
     public TableColumn CurrMonthEndDateTimeCol;
-    public TableColumn CurrMonthTypeCol;
-    public TableColumn CurrMonthDescriptionCol;
     public TableView CurrWeekTable;
     public TableColumn CurrWeekApptIdCol;
     public TableColumn CurrWeekCustIdCol;
-    public TableColumn CurrWeekUserIdCol;
-    public TableColumn CurrWeekContactIdCol;
-    public TableColumn CurrWeekTitleCol;
-    public TableColumn CurrWeekLocationCol;
+    public TableColumn CurrWeekAdvisorIdCol;
+    public TableColumn CurrWeekTechIdCol;
     public TableColumn CurrWeekStartDateTimeCol;
     public TableColumn CurrWeekEndDateTimeCol;
-    public TableColumn CurrWeekTypeCol;
-    public TableColumn CurrWeekDescriptionCol;
     public TextField ApptIdField;
     public TextField ApptTitleField;
-    public ComboBox ContactComboBox;
-    public ComboBox UserComboBox;
+    public ComboBox TechComboBox;
+    public ComboBox AdvisorComboBox;
     public ComboBox CustomerComboBox;
     public ComboBox StartTimeComboBox;
     public ComboBox EndTimeComboBox;
-    public TextField LocationField;
     public javafx.scene.control.DatePicker DatePicker;
-    public TextField DescriptionField;
-    public ComboBox ApptTypeComboBox;
     public Button ExitButton;
+    public TableColumn AllConcernCol;
+    public TableColumn CurrMonthConcernCol;
+    public TableColumn CurrWeekConcernCol;
+    public TextField ApptConcernsField;
+    public TableColumn AllConcernsCol;
+    public TableColumn CurrMonthConcernsCol;
+    public TableColumn CurrWeekConcernsCol;
     private Appointment appointment;
     private int apptId;
     private int custId;
-    private int userId;
-    private int contactId;
-    private String title;
-    private String description;
-    private String location;
-    private String type;
+    private int advisorId;
+    private int techId;
+    private String concerns;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Timestamp startTimestamp;
     private Timestamp endTimestamp;
     ObservableList<Customer> customerList = observableArrayList();
-    ObservableList<Contact> contactList = observableArrayList();
-    ObservableList<User> userList = observableArrayList();
-    ObservableList<String> apptTypeList = observableArrayList();
+    ObservableList<Tech> TechList = observableArrayList();
+    ObservableList<Advisor> advisorList = observableArrayList();
 
     /**
      * CONTAINS MULTIPLE LAMBDA EXPRESSIONS: The first three lambda expressions gets a selected appointment from AllApptsTable, CurrMonthTable,
      * or CurrWeekTable and put it's information into the AppointmentForm fields. they takes parameters of object,
      * oldSelection, and newSelection and if there is a new selection, it fills in the appointment fields.
-     * The fourth lambda expression takes in an event from Exit button click and confirms the user would like to quit,
+     * The fourth lambda expression takes in an event from Exit button click and confirms the Advisor would like to quit,
      * then closes the program.
      *
      * This method initializes AppointmentForm.
@@ -127,21 +114,17 @@ public class AppointmentForm implements Initializable {
                 appointment = (Appointment)newSelection;
                 apptId = appointment.getId();
                 ApptIdField.setText(Integer.toString(apptId));
-                title = appointment.getTitle();
-                ApptTitleField.setText(title);
                 custId = appointment.getCustId();
                 Customer customer = CustomerDAO.getCustomerById(custId);
                 CustomerComboBox.setValue(customer);
-                contactId = appointment.getContactId();
-                Contact contact = ContactDAO.getContactById(contactId);
-                ContactComboBox.setValue(contact);
-                userId = appointment.getUserId();
-                User user = UserDAO.getUserById(userId);
-                UserComboBox.setValue(user);
-                type = appointment.getType();
-                ApptTypeComboBox.setValue(type);
-                description = appointment.getDescription();
-                DescriptionField.setText(description);
+                techId = appointment.getTechId();
+                Tech tech = TechDAO.getTechById(techId);
+                TechComboBox.setValue(tech);
+                advisorId = appointment.getAdvisorId();
+                Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
+                AdvisorComboBox.setValue(advisor);
+                concerns = appointment.getConcerns();
+                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(null);
                 DatePicker.setValue(date);
@@ -149,8 +132,6 @@ public class AppointmentForm implements Initializable {
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
-                location = appointment.getLocation();
-                LocationField.setText(location);
             }
         });
         CurrMonthTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -158,29 +139,23 @@ public class AppointmentForm implements Initializable {
                 appointment = (Appointment)newSelection;
                 apptId = appointment.getId();
                 ApptIdField.setText(Integer.toString(apptId));
-                title = appointment.getTitle();
-                ApptTitleField.setText(title);
                 custId = appointment.getCustId();
                 Customer customer = CustomerDAO.getCustomerById(custId);
                 CustomerComboBox.setValue(customer);
-                contactId = appointment.getContactId();
-                Contact contact = ContactDAO.getContactById(contactId);
-                ContactComboBox.setValue(contact);
-                userId = appointment.getUserId();
-                User user = UserDAO.getUserById(userId);
-                UserComboBox.setValue(user);
-                type = appointment.getType();
-                ApptTypeComboBox.setValue(type);
-                description = appointment.getDescription();
-                DescriptionField.setText(description);
+                techId = appointment.getTechId();
+                Tech tech = TechDAO.getTechById(techId);
+                TechComboBox.setValue(tech);
+                advisorId = appointment.getAdvisorId();
+                Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
+                AdvisorComboBox.setValue(advisor);
+                concerns = appointment.getConcerns();
+                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(date);
                 startTime = (appointment.getStartDateTime().toLocalDateTime()).toLocalTime();
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
-                location = appointment.getLocation();
-                LocationField.setText(location);
             }
         });
         CurrWeekTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -188,29 +163,23 @@ public class AppointmentForm implements Initializable {
                 appointment = (Appointment)newSelection;
                 apptId = appointment.getId();
                 ApptIdField.setText(Integer.toString(apptId));
-                title = appointment.getTitle();
-                ApptTitleField.setText(title);
                 custId = appointment.getCustId();
                 Customer customer = CustomerDAO.getCustomerById(custId);
                 CustomerComboBox.setValue(customer);
-                contactId = appointment.getContactId();
-                Contact contact = ContactDAO.getContactById(contactId);
-                ContactComboBox.setValue(contact);
-                userId = appointment.getUserId();
-                User user = UserDAO.getUserById(userId);
-                UserComboBox.setValue(user);
-                type = appointment.getType();
-                ApptTypeComboBox.setValue(type);
-                description = appointment.getDescription();
-                DescriptionField.setText(description);
+                techId = appointment.getTechId();
+                Tech tech = TechDAO.getTechById(techId);
+                TechComboBox.setValue(tech);
+                advisorId = appointment.getAdvisorId();
+                Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
+                AdvisorComboBox.setValue(advisor);
+                concerns = appointment.getConcerns();
+                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(date);
                 startTime = (appointment.getStartDateTime().toLocalDateTime()).toLocalTime();
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
-                location = appointment.getLocation();
-                LocationField.setText(location);
             }
         });
 
@@ -219,7 +188,7 @@ public class AppointmentForm implements Initializable {
         {
             Alert alert;
 
-            // Confirm user wants to exit program
+            // Confirm Advisor wants to exit program
             alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like to exit the program?");
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -239,45 +208,36 @@ public class AppointmentForm implements Initializable {
         AllApptsTable.setItems(AppointmentsDAO.getAllApptData());
         AllApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         AllCustIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
-        AllUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        AllContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-        AllTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        AllLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        AllAdvisorIdCol.setCellValueFactory(new PropertyValueFactory<>("advisorId"));
+        AllTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         AllStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         AllEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        AllTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        AllDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        AllConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
 
         // Populate Current Month table on schedule form
         CurrMonthTable.setItems(AppointmentsDAO.getCurrMonthApptData());
         CurrMonthApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         CurrMonthCustIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
-        CurrMonthUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        CurrMonthContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-        CurrMonthTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        CurrMonthLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        CurrMonthAdvisorIdCol.setCellValueFactory(new PropertyValueFactory<>("advisorId"));
+        CurrMonthTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         CurrMonthStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrMonthEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        CurrMonthTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        CurrMonthDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        CurrMonthConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
 
         // Populate Current Week table on schedule form
         CurrWeekTable.setItems(AppointmentsDAO.getCurrWeekApptData());
         CurrWeekApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         CurrWeekCustIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
-        CurrWeekUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        CurrWeekContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-        CurrWeekTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        CurrWeekLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        CurrWeekAdvisorIdCol.setCellValueFactory(new PropertyValueFactory<>("advisorId"));
+        CurrWeekTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         CurrWeekStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrWeekEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        CurrWeekTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        CurrWeekDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        CurrWeekConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
     }
 
     /**
-     * This method fills the customer, contact, user, and start/end time combo boxes.  Customer combo box uses customer
-     * id and name, contact combo box uses contact id and name, user combo box uses user id and name, and appoint type
+     * This method fills the customer, Tech, Advisor, and start/end time combo boxes.  Customer combo box uses customer
+     * id and name, Tech combo box uses Tech id and name, Advisor combo box uses Advisor id and name, and appoint type
      * uses appointment type list. The start and end time combo boxes show the eastern time business hours converted
      * into local time.
      */
@@ -287,15 +247,15 @@ public class AppointmentForm implements Initializable {
         CustomerComboBox.setVisibleRowCount(5);
         CustomerComboBox.setItems(customerList);
 
-        // Fill contact combo box
-        contactList = ContactDAO.getContactData();
-        ContactComboBox.setVisibleRowCount(5);
-        ContactComboBox.setItems(contactList);
+        // Fill Tech combo box
+        TechList = TechDAO.getTechData();
+        TechComboBox.setVisibleRowCount(5);
+        TechComboBox.setItems(TechList);
 
-        // Fill user combo box
-        userList = UserDAO.getUserData();
-        UserComboBox.setVisibleRowCount(5);
-        UserComboBox.setItems(userList);
+        // Fill Advisor combo box
+        advisorList = AdvisorDAO.getAdvisorData();
+        AdvisorComboBox.setVisibleRowCount(5);
+        AdvisorComboBox.setItems(advisorList);
 
         // Fill start time combo box
         LocalTime startLocal = Appointment.updateDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))).toLocalTime();
@@ -316,12 +276,6 @@ public class AppointmentForm implements Initializable {
             start = start.plusMinutes(10);
         }
         EndTimeComboBox.getSelectionModel().select(startLocal.plusMinutes(10));
-
-        // Fill appointment type combo box
-        apptTypeList = Appointment.getAllApptTypes();
-        ApptTypeComboBox.setVisibleRowCount(5);
-        ApptTypeComboBox.setItems(apptTypeList);
-
     }
 
     /**
@@ -355,8 +309,8 @@ public class AppointmentForm implements Initializable {
     }
 
     /**
-     * This method calls emptyFieldCheck, if none empty it gets info from user input, adds the appointment, then updates
-     * the appointment tables, otherwise informs user of error.
+     * This method calls emptyFieldCheck, if none empty it gets info from Advisor input, adds the appointment, then updates
+     * the appointment tables, otherwise informs Advisor of error.
      * @param actionEvent on Add button click
      */
     public void AddApptButtonAction(ActionEvent actionEvent) {
@@ -365,21 +319,18 @@ public class AppointmentForm implements Initializable {
         // Check that all fields/combo boxes have been filled out, add customer
         if (emptyFieldCheck()) {
             // Get new field values
-            title = ApptTitleField.getText();
             custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
-            contactId = ((Contact)ContactComboBox.getSelectionModel().getSelectedItem()).getId();
-            userId = ((User)UserComboBox.getSelectionModel().getSelectedItem()).getId();
-            type = (String)ApptTypeComboBox.getSelectionModel().getSelectedItem();
-            description = DescriptionField.getText();
+            techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
+            advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+            concerns = ApptConcernsField.getText();
             date = DatePicker.getValue();
             startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
             endTime = (LocalTime)EndTimeComboBox.getSelectionModel().getSelectedItem();
             startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
             endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
-            location = LocationField.getText();
 
-            // If apptId > 0 returned, repopulate table and inform user of success
-            int apptId = AppointmentsDAO.addAppt(custId, userId, contactId, title, description, location, type, startTimestamp, endTimestamp);
+            // If apptId > 0 returned, repopulate table and inform Advisor of success
+            int apptId = AppointmentsDAO.addAppt(custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
             if (apptId > 0) {
                 populateApptsTables();
                 // Confirm customer added
@@ -391,7 +342,7 @@ public class AppointmentForm implements Initializable {
                 // Clear form fields
                 ClearButtonAction(null);
             }
-            // Alert user: customer has not been added
+            // Alert Advisor: customer has not been added
             else {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Add Appointment Error");
@@ -402,8 +353,8 @@ public class AppointmentForm implements Initializable {
     }
 
     /**
-     * This method calls emptyFieldCheck, if none empty, it gets info from user input, updates selected appointment, then
-     * updates the appointment tables, otherwise informs user of error.
+     * This method calls emptyFieldCheck, if none empty, it gets info from Advisor input, updates selected appointment, then
+     * updates the appointment tables, otherwise informs Advisor of error.
      * @param actionEvent on Update button click
      */
     public void UpdateApptButtonAction(ActionEvent actionEvent) {
@@ -411,21 +362,18 @@ public class AppointmentForm implements Initializable {
 
         // Check that all fields/combo boxes have been filled out, update appointment
         if (emptyFieldCheck()) {
-            title = ApptTitleField.getText();
             custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
-            contactId = ((Contact)ContactComboBox.getSelectionModel().getSelectedItem()).getId();
-            userId = ((User)UserComboBox.getSelectionModel().getSelectedItem()).getId();
-            type = (String)ApptTypeComboBox.getSelectionModel().getSelectedItem();
-            description = DescriptionField.getText();
+            techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
+            advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+            concerns = ApptConcernsField.getText();
             date = DatePicker.getValue();
             startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
             endTime = (LocalTime)EndTimeComboBox.getSelectionModel().getSelectedItem();
             startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
             endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
-            location = LocationField.getText();
 
-            // If appointment updated in database, repopulate table and inform user of success
-            if (AppointmentsDAO.updateAppt(apptId, custId, userId, contactId, title, description, location, type, startTimestamp, endTimestamp) > 0) {
+            // If appointment updated in database, repopulate table and inform Advisor of success
+            if (AppointmentsDAO.updateAppt(apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp) > 0) {
                 // Repopulate table
                 populateApptsTables();
 
@@ -438,7 +386,7 @@ public class AppointmentForm implements Initializable {
                 // Clear form fields
                 ClearButtonAction(null);
             }
-            // Alert user: customer has not been added
+            // Alert Advisor: customer has not been added
             else {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Update Error");
@@ -449,14 +397,14 @@ public class AppointmentForm implements Initializable {
     }
 
     /**
-     * This method checks that an appointment is selected, calls deleteAppt from AppointmentsDAO, then informs user of
+     * This method checks that an appointment is selected, calls deleteAppt from AppointmentsDAO, then informs Advisor of
      * successful delete or otherwise.
      * @param actionEvent on Delete button click
      */
     public void DeleteApptButtonAction(ActionEvent actionEvent) {
         Alert alert;
 
-        // If nothing selected, alert user to select appointment
+        // If nothing selected, alert Advisor to select appointment
         if (appointment == null) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Delete Error");
@@ -465,7 +413,7 @@ public class AppointmentForm implements Initializable {
             return;
         }
         else {
-            // If delete is unsuccessful,notify user
+            // If delete is unsuccessful,notify Advisor
             if (AppointmentsDAO.deleteAppt(appointment) <= 0) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Delete Error");
@@ -476,7 +424,7 @@ public class AppointmentForm implements Initializable {
                 ClearButtonAction(null);
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Delete Successful");
-                alert.setContentText("Appointment #" + apptId + " of type: " + type + ", has been deleted.");
+                alert.setContentText("Appointment #" + apptId +  " has been deleted.");
                 alert.showAndWait();
                 populateApptsTables();
             }
@@ -490,16 +438,13 @@ public class AppointmentForm implements Initializable {
     public void ClearButtonAction(ActionEvent actionEvent) {
         // Clear fields
         ApptIdField.clear();
-        ApptTitleField.clear();
         CustomerComboBox.getSelectionModel().clearSelection();
-        ContactComboBox.getSelectionModel().clearSelection();
-        UserComboBox.getSelectionModel().clearSelection();
-        ApptTypeComboBox.getSelectionModel().clearSelection();
-        DescriptionField.clear();
+        TechComboBox.getSelectionModel().clearSelection();
+        AdvisorComboBox.getSelectionModel().clearSelection();
+        ApptConcernsField.clear();
         DatePicker.getEditor().clear();
         StartTimeComboBox.getSelectionModel().clearSelection();
         EndTimeComboBox.getSelectionModel().clearSelection();
-        LocationField.clear();
     }
 
     /**
@@ -508,16 +453,13 @@ public class AppointmentForm implements Initializable {
      */
     public boolean emptyFieldCheck() {
         boolean hasText = true;
-        if ((ApptTitleField.getText().isBlank())
-                || (CustomerComboBox.getValue() == null)
-                || (ContactComboBox.getValue() == null)
-                || (UserComboBox.getValue() == null)
-                || (ApptTypeComboBox.getValue() == null)
-                || (DescriptionField.getText().isBlank())
+        if ((CustomerComboBox.getValue() == null)
+                || (TechComboBox.getValue() == null)
+                || (AdvisorComboBox.getValue() == null)
+                || (ApptConcernsField.getText().isBlank())
                 || (DatePicker.getValue() == null)
                 || (StartTimeComboBox.getValue() == null)
                 || (EndTimeComboBox.getValue() == null)
-                || (LocationField.getText().isBlank())
                 ) {
             Alert alert;
 

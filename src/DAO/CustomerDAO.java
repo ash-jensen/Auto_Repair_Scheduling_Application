@@ -64,7 +64,7 @@ public abstract class CustomerDAO {
     }
 
     /**
-     * This method adds a customer to the database using information gotten from the User and returns the new customer's
+     * This method adds a customer to the database using information gotten from the Advisor and returns the new customer's
      * customer id.  It takes in name, address, postalCode, phoneNumber and divId.
      * @param name String name to add to the customer in the database
      * @param address String address to add to the customer in the database
