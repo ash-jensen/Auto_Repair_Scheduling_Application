@@ -23,7 +23,6 @@ public class Tech {
      */
     private String email;
 
-
     /**
      * This is the contact constructor with id, name, and email.
      * @param id sets integer id

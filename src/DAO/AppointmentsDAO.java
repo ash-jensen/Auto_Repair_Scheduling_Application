@@ -53,10 +53,11 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
+                String type = rs.getString("Type");
                 String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
+                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
                 allApptsList.add(appt);
             }
         }
@@ -95,10 +96,11 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
+                String type = rs.getString("Type");
                 String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
+                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
                 currMonthList.add(appt);
             }
         }
@@ -138,10 +140,11 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
+                String type = rs.getString("Type");
                 String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
+                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
                 currWeekList.add(appt);
             }
         }
@@ -182,10 +185,11 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
+                String type = rs.getString("Type");
                 String concern = rs.getString("Concern");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, concern, startTimestamp, endTimestamp);
+                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concern, startTimestamp, endTimestamp);
                 techApptList.add(appt);
             }
         }
@@ -204,19 +208,20 @@ public abstract class AppointmentsDAO {
      * @param custId integer custId to add to the appointment in the database
      * @param advisorId integer advisorId to add to the appointment in the database
      * @param techId integer techId to add to the appointment in the database
+     * @param type String type to add to the appointment in the database
      * @param concerns String concern to add to the appointment in the database
      * @param startTimestamp Timestamp startTimestamp to add to the appointment in the database
      * @param endTimestamp Timestamp endTimestamp to add to the appointment in the database
      * @return integer apptId
      */
-    public static int addAppt(int custId, int advisorId, int techId, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
+    public static int addAppt(int custId, int advisorId, int techId, String type, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
         int apptId = 0;
         int overlappingAppts = overlapCheck(custId, startTimestamp, endTimestamp);
 
         if (overlappingAppts == 0) {
             try {
                 // SQL statement to insert customer in customers table
-                String sql = "INSERT INTO appointments (Customer_ID, Advisor_ID, Tech_ID, Concerns, Start, End) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO appointments (Customer_ID, Advisor_ID, Tech_ID, Type, Concerns, Start, End) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 // Get connection to DB and send over the SQL
                 PreparedStatement ps = JDBC.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -225,9 +230,10 @@ public abstract class AppointmentsDAO {
                 ps.setInt(1, custId);
                 ps.setInt(2, advisorId);
                 ps.setInt(3, techId);
-                ps.setString(4, concerns);
-                ps.setTimestamp(5, startTimestamp);
-                ps.setTimestamp(6, endTimestamp);
+                ps.setString(4, type);
+                ps.setString(5, concerns);
+                ps.setTimestamp(6, startTimestamp);
+                ps.setTimestamp(7, endTimestamp);
 
                 // Execute the insert, get returned customer id
                 ps.execute();
@@ -262,12 +268,13 @@ public abstract class AppointmentsDAO {
      * @param custId integer custId to update the appointment in the database
      * @param advisorId integer advisorId to update the appointment in the database
      * @param techId integer techId to update the appointment in the database
+     * @param type String typ eot update the appointment in the database
      * @param concerns String concerns to update the appointment in the database
      * @param startTimestamp Timestamp startTimestamp to update the appointment in the database
      * @param endTimestamp Timestamp endTimestamp to update the appointment in the database
      * @return integer rowsAffected
      */
-    public static int updateAppt(int apptId, int custId, int advisorId, int techId, String concerns, Timestamp startTimestamp, Timestamp endTimestamp ) {
+    public static int updateAppt(int apptId, int custId, int advisorId, int techId, String type, String concerns, Timestamp startTimestamp, Timestamp endTimestamp ) {
         Alert alert;
         int rowsAffected = 0;
         int overlappingAppts = modifyOverlapCheck(custId, apptId, startTimestamp, endTimestamp);
@@ -278,7 +285,7 @@ public abstract class AppointmentsDAO {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     // SQL statement to insert customer in customers table
-                    String sql = "Update appointments SET Customer_ID = ?, Advisor_ID =?, Tech_ID =?, Concerns =?, Start =?, End =? WHERE Appointment_ID = ?";
+                    String sql = "Update appointments SET Customer_ID = ?, Advisor_ID =?, Tech_ID =?, Type =?, Concerns =?, Start =?, End =? WHERE Appointment_ID = ?";
 
                     // Get connection to DB and send over the SQL
                     PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -287,10 +294,11 @@ public abstract class AppointmentsDAO {
                     ps.setInt(1, custId);
                     ps.setInt(2, advisorId);
                     ps.setInt(3, techId);
-                    ps.setString(4, concerns);
-                    ps.setTimestamp(5, startTimestamp);
-                    ps.setTimestamp(6, endTimestamp);
-                    ps.setInt(7, apptId);
+                    ps.setString(4, type);
+                    ps.setString(5, concerns);
+                    ps.setTimestamp(6, startTimestamp);
+                    ps.setTimestamp(7, endTimestamp);
+                    ps.setInt(8, apptId);
 
                     // Execute the update, assign number of rows affected and return
                     rowsAffected = ps.executeUpdate();
@@ -489,6 +497,7 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("Adivosr_ID");
                 int techId = rs.getInt("Tech_ID");
+                String type = rs.getString("Type");
                 String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 LocalDate startDate = (startTimestamp.toLocalDateTime()).toLocalDate();
@@ -498,7 +507,7 @@ public abstract class AppointmentsDAO {
                 Timestamp endTimestamp = rs.getTimestamp("End");
                 LocalTime endDateTime = (endTimestamp.toLocalDateTime()).toLocalTime();
                 apptsToPrint = (apptsToPrint + endDateTime + "\n");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
+                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
                 loginApptList.add(appt);
             }
 

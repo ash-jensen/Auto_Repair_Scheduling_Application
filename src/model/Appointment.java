@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * This class makes Appointment objects and includes getters/setters for id, custId, advisorId, techId, title, concerns, location, type,
+ * This class Appointments is used to make Diagnostic and Service Appointment objects, and includes getters/setters for id, custId, advisorId, techId, title, concerns, location, type,
  * startTimestamp, and endTimestamp.
  *
  * @author Ashley Jensen
@@ -33,6 +33,10 @@ public class Appointment {
      * Variable used to hold integer of tech id.
      */
     private int techId;
+    /**
+     * Variable used to hold string of type
+     */
+    private String type;
     /**
      * Variable used to hold the String title of an appointment.
      */
@@ -69,15 +73,17 @@ public class Appointment {
      * @param custId sets integer custId
      * @param advisorId sets integer advisorId
      * @param techId sets integer techId
+     * @param type
      * @param concerns sets String concerns
      * @param startTimestamp sets Timestamp startTimestamp
      * @param endTimestamp sets Timestamp endTimestamp
      */
-    public Appointment(int id, int custId, int advisorId, int techId, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
+    public Appointment(int id, int custId, int advisorId, int techId, String type, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
         this.id = id;
         this.custId = custId;
         this.advisorId = advisorId;
         this.techId = techId;
+        this.type = type;
         this.concerns = concerns;
         this.startTimestamp = startTimestamp;
         this.endTimestamp = endTimestamp;
@@ -145,6 +151,22 @@ public class Appointment {
      */
     public void setAdvisorId(int advisorId) {
         this.advisorId = advisorId;
+    }
+
+    /**
+     * This mehtod returns type;
+     * @return String type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * This method sets type variable to type parameter;
+     * @param type sets String type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**

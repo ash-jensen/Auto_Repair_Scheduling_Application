@@ -74,11 +74,15 @@ public class AppointmentForm implements Initializable {
     public TableColumn AllConcernsCol;
     public TableColumn CurrMonthConcernsCol;
     public TableColumn CurrWeekConcernsCol;
+    public RadioButton ServiceRB;
+    public RadioButton DiagnosticRB;
+    public Label ConcernLabel;
     private Appointment appointment;
     private int apptId;
     private int custId;
     private int advisorId;
     private int techId;
+    private String type;
     private String concerns;
     private LocalDate date;
     private LocalTime startTime;
@@ -322,6 +326,12 @@ public class AppointmentForm implements Initializable {
             custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
             techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
             advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+            if (ServiceRB.isScaleShape()) {
+                type = "Service Appointment";
+            }
+            else {
+                type = "Diagnostic Appointment";
+            }
             concerns = ApptConcernsField.getText();
             date = DatePicker.getValue();
             startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
@@ -330,7 +340,7 @@ public class AppointmentForm implements Initializable {
             endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
 
             // If apptId > 0 returned, repopulate table and inform Advisor of success
-            int apptId = AppointmentsDAO.addAppt(custId, advisorId, techId, concerns, startTimestamp, endTimestamp);
+            int apptId = AppointmentsDAO.addAppt(custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
             if (apptId > 0) {
                 populateApptsTables();
                 // Confirm customer added
@@ -365,6 +375,12 @@ public class AppointmentForm implements Initializable {
             custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
             techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
             advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+            if (ServiceRB.isScaleShape()) {
+                type = "Service Appointment";
+            }
+            else {
+                type = "Diagnostic Appointment";
+            }
             concerns = ApptConcernsField.getText();
             date = DatePicker.getValue();
             startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
@@ -373,7 +389,7 @@ public class AppointmentForm implements Initializable {
             endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
 
             // If appointment updated in database, repopulate table and inform Advisor of success
-            if (AppointmentsDAO.updateAppt(apptId, custId, advisorId, techId, concerns, startTimestamp, endTimestamp) > 0) {
+            if (AppointmentsDAO.updateAppt(apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp) > 0) {
                 // Repopulate table
                 populateApptsTables();
 
@@ -470,5 +486,15 @@ public class AppointmentForm implements Initializable {
             hasText = false;
         }
         return hasText;
+    }
+
+    public void ServiceRBAction(ActionEvent actionEvent) {
+        ConcernLabel.setText("Service Type");
+
+
+    }
+
+    public void DiagnosticRBAction(ActionEvent actionEvent) {
+        ConcernLabel.setText("Concerns");
     }
 }
