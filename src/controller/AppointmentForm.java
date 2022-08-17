@@ -75,6 +75,10 @@ public class AppointmentForm implements Initializable {
     public RadioButton ServiceRB;
     public RadioButton DiagnosticRB;
     public Label ConcernLabel;
+    public TableColumn AllServiceCol;
+    public TableColumn CurrMonthServiceCol;
+    public TableColumn CurrWeekServiceCol;
+    public ComboBox ApptServiceTypeComboBox;
     // Vars
     private Appointment appointment;
     private int apptId;
@@ -92,6 +96,7 @@ public class AppointmentForm implements Initializable {
     ObservableList<Customer> customerList = observableArrayList();
     ObservableList<Tech> techList = observableArrayList();
     ObservableList<Advisor> advisorList = observableArrayList();
+    ObservableList<String> serviceTypes = observableArrayList();
 
     /**
      * CONTAINS MULTIPLE LAMBDA EXPRESSIONS: The first three lambda expressions gets a selected appointment from AllApptsTable, CurrMonthTable,
@@ -139,13 +144,22 @@ public class AppointmentForm implements Initializable {
                     service = ((ServiceAppointment) appointment).getService();
                     ApptConcernsField.setText(service);
                     ServiceRB.setSelected(true);
+
+                    // Fill combo box with Lube Techs
+                    techList = TechDAO.getTechByType("Lube Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
                     System.out.println("Service Appt");
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
-                    System.out.println("Diag Appointment");
+
+                    // Fill combo box with Line Techs
+                    techList = TechDAO.getTechByType("Line Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
                 }
             }
         });
@@ -163,14 +177,33 @@ public class AppointmentForm implements Initializable {
                 advisorId = appointment.getAdvisorId();
                 Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
                 AdvisorComboBox.setValue(advisor);
-                concerns = appointment.getConcerns();
-                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(date);
                 startTime = (appointment.getStartDateTime().toLocalDateTime()).toLocalTime();
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
+                if (appointment instanceof ServiceAppointment) {
+                    service = ((ServiceAppointment) appointment).getService();
+                    ApptConcernsField.setText(service);
+                    ServiceRB.setSelected(true);
+
+                    // Fill combo box with Lube Techs
+                    techList = TechDAO.getTechByType("Lube Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
+                    System.out.println("Service Appt");
+                }
+                else {
+                    concerns = appointment.getConcerns();
+                    ApptConcernsField.setText(concerns);
+                    DiagnosticRB.setSelected(true);
+
+                    // Fill combo box with Line Techs
+                    techList = TechDAO.getTechByType("Line Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
+                }
             }
         });
         CurrWeekTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -187,14 +220,33 @@ public class AppointmentForm implements Initializable {
                 advisorId = appointment.getAdvisorId();
                 Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
                 AdvisorComboBox.setValue(advisor);
-                concerns = appointment.getConcerns();
-                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(date);
                 startTime = (appointment.getStartDateTime().toLocalDateTime()).toLocalTime();
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
+                if (appointment instanceof ServiceAppointment) {
+                    service = ((ServiceAppointment) appointment).getService();
+                    ApptConcernsField.setText(service);
+                    ServiceRB.setSelected(true);
+
+                    // Fill combo box with Lube Techs
+                    techList = TechDAO.getTechByType("Lube Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
+                    System.out.println("Service Appt");
+                }
+                else {
+                    concerns = appointment.getConcerns();
+                    ApptConcernsField.setText(concerns);
+                    DiagnosticRB.setSelected(true);
+
+                    // Fill combo box with Line Techs
+                    techList = TechDAO.getTechByType("Line Tech");
+                    TechComboBox.setVisibleRowCount(5);
+                    TechComboBox.setItems(techList);
+                }
             }
         });
 
@@ -212,6 +264,8 @@ public class AppointmentForm implements Initializable {
             }
 
         } );
+
+        ApptServiceTypeComboBox.setVisible(false);
     }
 
     /**
@@ -228,6 +282,7 @@ public class AppointmentForm implements Initializable {
         AllStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         AllEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         AllConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
+        AllServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
 
         // Populate Current Month table on schedule form
         CurrMonthTable.setItems(AppointmentsDAO.getCurrMonthApptData());
@@ -238,6 +293,7 @@ public class AppointmentForm implements Initializable {
         CurrMonthStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrMonthEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         CurrMonthConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
+        CurrMonthServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
 
         // Populate Current Week table on schedule form
         CurrWeekTable.setItems(AppointmentsDAO.getCurrWeekApptData());
@@ -248,6 +304,7 @@ public class AppointmentForm implements Initializable {
         CurrWeekStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrWeekEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
         CurrWeekConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
+        CurrWeekServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
     }
 
     /**
@@ -263,7 +320,7 @@ public class AppointmentForm implements Initializable {
         CustomerComboBox.setItems(customerList);
 
         // Fill Tech combo box
-        techList = TechDAO.getTechData();
+        techList = TechDAO.getTechByType("Line Tech");
         TechComboBox.setVisibleRowCount(5);
         TechComboBox.setItems(techList);
 
@@ -291,6 +348,11 @@ public class AppointmentForm implements Initializable {
             start = start.plusMinutes(10);
         }
         EndTimeComboBox.getSelectionModel().select(startLocal.plusMinutes(10));
+
+        // Fill service types combo box
+        serviceTypes = ServiceAppointment.getServiceTypes();
+        ApptServiceTypeComboBox.setVisibleRowCount(5);
+        ApptServiceTypeComboBox.setItems(serviceTypes);
     }
 
     /**
@@ -331,44 +393,59 @@ public class AppointmentForm implements Initializable {
     public void AddApptButtonAction(ActionEvent actionEvent) {
         Alert alert;
 
-        // Check that all fields/combo boxes have been filled out, add customer
-        if (emptyFieldCheck()) {
-            // Get new field values
-            custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
-            techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
-            advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
-            if (ServiceRB.isScaleShape()) {
-                type = "Service Appointment";
-            }
-            else {
-                type = "Diagnostic Appointment";
-            }
-            concerns = ApptConcernsField.getText();
-            date = DatePicker.getValue();
-            startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
-            endTime = (LocalTime)EndTimeComboBox.getSelectionModel().getSelectedItem();
-            startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
-            endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
+        if (ServiceRB.isSelected() && (((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getType().equals("Line Tech"))) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Tech Type Error");
+            alert.setContentText("Please change tech to a Lube Tech for service appointments.");
+            alert.show();
+        }
+        else if (DiagnosticRB.isSelected() && (((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getType().equals("Lube Tech"))) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Tech Type Error");
+            alert.setContentText("Please change tech to a Line Tech for diagnostic appointments.");
+            alert.show();
+        }
+        else {
+            // Check that all fields/combo boxes have been filled out, add customer
+            if (emptyFieldCheck()) {
+                // Get new field values
+                custId = ((Customer) CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
+                techId = ((Tech) TechComboBox.getSelectionModel().getSelectedItem()).getId();
+                advisorId = ((Advisor) AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+                if (ServiceRB.isSelected()) {
+                    type = "Service";
+                    concerns = (String) ApptServiceTypeComboBox.getSelectionModel().getSelectedItem();
+                } else {
+                    type = "Diagnostic";
+                    concerns = ApptConcernsField.getText();
+                }
+                date = DatePicker.getValue();
+                startTime = (LocalTime) StartTimeComboBox.getSelectionModel().getSelectedItem();
+                endTime = (LocalTime) EndTimeComboBox.getSelectionModel().getSelectedItem();
+                startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
+                endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
 
-            // If apptId > 0 returned, repopulate table and inform Advisor of success
-            int apptId = AppointmentsDAO.addAppt(custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
-            if (apptId > 0) {
-                populateApptsTables();
-                // Confirm customer added
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Add Customer");
-                alert.setContentText("Appointment #" + apptId + " has been added.");
-                alert.showAndWait();
+                // If apptId > 0 returned, repopulate table and inform Advisor of success
+                int apptId = AppointmentsDAO.addAppt(custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
 
-                // Clear form fields
-                ClearButtonAction(null);
-            }
-            // Alert Advisor: customer has not been added
-            else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Add Appointment Error");
-                alert.setContentText("Error: Appointment has NOT been added");
-                alert.showAndWait();
+                if (apptId > 0) {
+                    populateApptsTables();
+                    // Confirm customer added
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Add Customer");
+                    alert.setContentText("Appointment #" + apptId + " has been added.");
+                    alert.showAndWait();
+
+                    // Clear form fields
+                    ClearButtonAction(null);
+                }
+                // Alert Advisor: customer has not been added
+                else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Add Appointment Error");
+                    alert.setContentText("Error: Appointment has NOT been added");
+                    alert.showAndWait();
+                }
             }
         }
     }
@@ -381,44 +458,57 @@ public class AppointmentForm implements Initializable {
     public void UpdateApptButtonAction(ActionEvent actionEvent) {
         Alert alert;
 
-        // Check that all fields/combo boxes have been filled out, update appointment
-        if (emptyFieldCheck()) {
-            custId = ((Customer)CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
-            techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
-            advisorId = ((Advisor)AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
-            if (ServiceRB.isScaleShape()) {
-                type = "Service Appointment";
-            }
-            else {
-                type = "Diagnostic Appointment";
-            }
-            concerns = ApptConcernsField.getText();
-            date = DatePicker.getValue();
-            startTime = (LocalTime)StartTimeComboBox.getSelectionModel().getSelectedItem();
-            endTime = (LocalTime)EndTimeComboBox.getSelectionModel().getSelectedItem();
-            startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
-            endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
+        if (ServiceRB.isSelected() && (((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getType().equals("Line Tech"))) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Tech Type Error");
+            alert.setContentText("Please change tech to a Lube Tech for service appointments.");
+            alert.show();
+        }
+        else if (DiagnosticRB.isSelected() && (((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getType().equals("Lube Tech"))) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Tech Type Error");
+            alert.setContentText("Please change tech to a Line Tech for diagnostic appointments.");
+            alert.show();
+        }
+        else {
+            // Check that all fields/combo boxes have been filled out, update appointment
+            if (emptyFieldCheck()) {
+                custId = ((Customer) CustomerComboBox.getSelectionModel().getSelectedItem()).getId();
+                techId = ((Tech) TechComboBox.getSelectionModel().getSelectedItem()).getId();
+                advisorId = ((Advisor) AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
+                if (ServiceRB.isSelected()) {
+                    type = "Service";
+                } else {
+                    type = "Diagnostic";
+                }
+                concerns = ApptConcernsField.getText();
+                date = DatePicker.getValue();
+                startTime = (LocalTime) StartTimeComboBox.getSelectionModel().getSelectedItem();
+                endTime = (LocalTime) EndTimeComboBox.getSelectionModel().getSelectedItem();
+                startTimestamp = Timestamp.valueOf(LocalDateTime.of(date, startTime));
+                endTimestamp = Timestamp.valueOf(LocalDateTime.of(date, endTime));
 
-            // If appointment updated in database, repopulate table and inform Advisor of success
-            if (AppointmentsDAO.updateAppt(apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp) > 0) {
-                // Repopulate table
-                populateApptsTables();
+                // If appointment updated in database, repopulate table and inform Advisor of success
+                if (AppointmentsDAO.updateAppt(apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp) > 0) {
+                    // Repopulate table
+                    populateApptsTables();
 
-                // Confirm customer updated
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Update Appointment");
-                alert.setContentText("Appointment #" + apptId + " has been updated.");
-                alert.showAndWait();
+                    // Confirm customer updated
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Update Appointment");
+                    alert.setContentText("Appointment #" + apptId + " has been updated.");
+                    alert.showAndWait();
 
-                // Clear form fields
-                ClearButtonAction(null);
-            }
-            // Alert Advisor: customer has not been added
-            else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Update Error");
-                alert.setContentText("Error: Appointment has NOT been updated");
-                alert.showAndWait();
+                    // Clear form fields
+                    ClearButtonAction(null);
+                }
+                // Alert Advisor: customer has not been added
+                else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Update Error");
+                    alert.setContentText("Error: Appointment has NOT been updated");
+                    alert.showAndWait();
+                }
             }
         }
     }
@@ -468,6 +558,7 @@ public class AppointmentForm implements Initializable {
         CustomerComboBox.getSelectionModel().clearSelection();
         TechComboBox.getSelectionModel().clearSelection();
         AdvisorComboBox.getSelectionModel().clearSelection();
+        ApptServiceTypeComboBox.getSelectionModel().clearSelection();
         ApptConcernsField.clear();
         DatePicker.getEditor().clear();
         StartTimeComboBox.getSelectionModel().clearSelection();
@@ -483,7 +574,7 @@ public class AppointmentForm implements Initializable {
         if ((CustomerComboBox.getValue() == null)
                 || (TechComboBox.getValue() == null)
                 || (AdvisorComboBox.getValue() == null)
-                || (ApptConcernsField.getText().isBlank())
+                || (ApptConcernsField.getText().isBlank() && ApptServiceTypeComboBox.getValue() == null)
                 || (DatePicker.getValue() == null)
                 || (StartTimeComboBox.getValue() == null)
                 || (EndTimeComboBox.getValue() == null)
@@ -501,11 +592,19 @@ public class AppointmentForm implements Initializable {
 
     public void ServiceRBAction(ActionEvent actionEvent) {
         ConcernLabel.setText("Service Type");
-
-
+        ApptConcernsField.setVisible(false);
+        ApptServiceTypeComboBox.setVisible(true);
+        techList = TechDAO.getTechByType("Lube Tech");
+        TechComboBox.setVisibleRowCount(5);
+        TechComboBox.setItems(techList);
     }
 
     public void DiagnosticRBAction(ActionEvent actionEvent) {
         ConcernLabel.setText("Concerns");
+        ApptServiceTypeComboBox.setVisible(false);
+        ApptConcernsField.setVisible(true);
+        techList = TechDAO.getTechByType("Line Tech");
+        TechComboBox.setVisibleRowCount(5);
+        TechComboBox.setItems(techList);
     }
 }

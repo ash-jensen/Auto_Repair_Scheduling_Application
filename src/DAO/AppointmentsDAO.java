@@ -57,18 +57,19 @@ public abstract class AppointmentsDAO {
                 String type = rs.getString("Type");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                if (type == "Service") {
+                if (type.equals("Service")) {
                     String service = rs.getString("Concerns");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
                     allApptsList.add(appt);
-
+                    System.out.println("Service appt");
                 }
                 else {
                     String concerns = rs.getString("Concerns");
                     Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
                             startTimestamp, endTimestamp);
                     allApptsList.add(appt);
+                    System.out.println("Diag appt");
                 }
             }
         }
@@ -110,7 +111,7 @@ public abstract class AppointmentsDAO {
                 String type = rs.getString("Type");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                if (type == "Service") {
+                if (type.equals("Service")) {
                     String service = rs.getString("Concerns");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
@@ -163,7 +164,7 @@ public abstract class AppointmentsDAO {
                 String type = rs.getString("Type");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                if (type == "Service") {
+                if (type.equals("Service")) {
                     String service = rs.getString("Concerns");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);

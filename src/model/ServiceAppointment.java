@@ -11,7 +11,7 @@ public class ServiceAppointment extends Appointment {
 
     private static ObservableList<String> serviceTypes = observableArrayList();
 
-    public ServiceAppointment(int id, int custId, int advisorId, int techId, String type, String concerns,
+    public ServiceAppointment(int id, int custId, int advisorId, int techId, String type, String service,
                               Timestamp startTimestamp, Timestamp endTimestamp) {
         super(id, custId, advisorId, techId, type, startTimestamp, endTimestamp);
         

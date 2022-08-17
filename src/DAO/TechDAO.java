@@ -26,9 +26,12 @@ public abstract class TechDAO {
      */
     public static ObservableList<Tech> getTechData() {
         // If tech list already filled, return techList
-        if (!techList.isEmpty()) {
+        /*if (!techList.isEmpty()) {
             return techList;
         }
+
+         */
+        techList.clear();
         try {
             // SQL statement to get all techs from techs table
             String sql = "SELECT * FROM technicians";
@@ -64,7 +67,7 @@ public abstract class TechDAO {
     public static Tech getTechById(int techIdToFind) {
         try {
             // SQL statement to get tech from techs table
-            String sql = "SELECT * FROM technicians WHERE tech_ID = ?";
+            String sql = "SELECT * FROM technicians WHERE Tech_ID = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -86,5 +89,36 @@ public abstract class TechDAO {
 
         // Return tech from db
         return tech;
+    }
+
+    public static ObservableList<Tech> getTechByType(String type) {
+        techList.clear();
+        try {
+            // SQL statement to get tech from techs table
+            String sql = "SELECT * FROM technicians WHERE Tech_Type = ?";
+
+            // Get a connection to DB and send over the SQL
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, type);
+
+            // Get results of query
+            ResultSet rs = ps.executeQuery();
+
+            // Set bind variables to create tech object
+            while (rs.next()) {
+                int techId = rs.getInt("Tech_ID");
+                String techName = rs.getString("Tech_Name");
+                String techType = rs.getString("Tech_Type");
+                String email = rs.getString("Email");
+                Tech tech = new Tech(techId, techName, techType, email);
+                techList.add(tech);
+            }
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        // Return tech from db
+        return techList;
     }
 }
