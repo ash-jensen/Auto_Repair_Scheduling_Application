@@ -235,15 +235,19 @@
                                     </Label>
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                                        <children>
-                                          <RadioButton fx:id="ServiceRB" mnemonicParsing="false" onAction="#ServiceRBAction" selected="true" text="Service">
-                                             <HBox.margin>
-                                                <Insets right="30.0" />
-                                             </HBox.margin>
+                                          <RadioButton fx:id="DiagnosticRB" mnemonicParsing="false" onAction="#DiagnosticRBAction" selected="true" text="Diagnostic">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="TypeToggleGroup" />
                                              </toggleGroup>
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
                                           </RadioButton>
-                                          <RadioButton fx:id="DiagnosticRB" mnemonicParsing="false" onAction="#DiagnosticRBAction" text="Diagnostic" toggleGroup="$TypeToggleGroup" />
+                                          <RadioButton fx:id="ServiceRB" mnemonicParsing="false" onAction="#ServiceRBAction" text="Service" toggleGroup="$TypeToggleGroup">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </RadioButton>
                                        </children>
                                     </HBox>
                                  </children>

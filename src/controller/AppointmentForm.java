@@ -14,13 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Advisor;
-import model.Appointment;
-import model.Tech;
-import model.Customer;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.Provider;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -77,6 +75,7 @@ public class AppointmentForm implements Initializable {
     public RadioButton ServiceRB;
     public RadioButton DiagnosticRB;
     public Label ConcernLabel;
+    // Vars
     private Appointment appointment;
     private int apptId;
     private int custId;
@@ -128,8 +127,6 @@ public class AppointmentForm implements Initializable {
                 advisorId = appointment.getAdvisorId();
                 Advisor advisor = AdvisorDAO.getAdvisorById(advisorId);
                 AdvisorComboBox.setValue(advisor);
-                concerns = appointment.getConcerns();
-                ApptConcernsField.setText(concerns);
                 date = (appointment.getStartDateTime().toLocalDateTime()).toLocalDate();
                 DatePicker.setValue(null);
                 DatePicker.setValue(date);
@@ -137,6 +134,19 @@ public class AppointmentForm implements Initializable {
                 StartTimeComboBox.setValue(startTime);
                 endTime = (appointment.getEndDateTime().toLocalDateTime()).toLocalTime();
                 EndTimeComboBox.setValue(endTime);
+                type = appointment.getType();
+                if (appointment instanceof ServiceAppointment) {
+                    service = ((ServiceAppointment) appointment).getService();
+                    ApptConcernsField.setText(service);
+                    ServiceRB.setSelected(true);
+                    System.out.println("Service Appt");
+                }
+                else {
+                    concerns = appointment.getConcerns();
+                    ApptConcernsField.setText(concerns);
+                    DiagnosticRB.setSelected(true);
+                    System.out.println("Diag Appointment");
+                }
             }
         });
         CurrMonthTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
