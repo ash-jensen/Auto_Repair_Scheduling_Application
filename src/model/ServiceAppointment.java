@@ -11,10 +11,9 @@ public class ServiceAppointment extends Appointment {
 
     private static ObservableList<String> serviceTypes = observableArrayList();
 
-    // TODO appointment type changes in DAO/Service/Diagnostic Appts => CONCERNS
-    public ServiceAppointment(int id, int custId, int advisorId, int techId, String type, String service,
+    public ServiceAppointment(int id, int custId, int advisorId, int techId, String type, String concerns,
                               Timestamp startTimestamp, Timestamp endTimestamp) {
-        super(id, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
+        super(id, custId, advisorId, techId, type, startTimestamp, endTimestamp);
         
         this.service = service;
     }

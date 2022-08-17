@@ -89,6 +89,16 @@ public class Appointment {
         this.endTimestamp = endTimestamp;
     }
 
+    public Appointment(int id, int custId, int advisorId, int techId, String type, Timestamp startTimestamp, Timestamp endTimestamp) {
+        this.id = id;
+        this.custId = custId;
+        this.advisorId = advisorId;
+        this.techId = techId;
+        this.type = type;
+        this.startTimestamp = startTimestamp;
+        this.endTimestamp = endTimestamp;
+    }
+
     /**
      * This method returns id.
      * @return integer id

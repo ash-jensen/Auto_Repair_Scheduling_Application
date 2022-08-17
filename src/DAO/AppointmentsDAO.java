@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import model.Advisor;
 import model.Appointment;
+import model.ServiceAppointment;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -54,11 +55,21 @@ public abstract class AppointmentsDAO {
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
                 String type = rs.getString("Type");
-                String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
-                allApptsList.add(appt);
+                if (type == "Service") {
+                    String service = rs.getString("Concerns");
+                    ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
+                            startTimestamp, endTimestamp);
+                    allApptsList.add(appt);
+
+                }
+                else {
+                    String concerns = rs.getString("Concerns");
+                    Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
+                            startTimestamp, endTimestamp);
+                    allApptsList.add(appt);
+                }
             }
         }
         catch (SQLException throwables) {
@@ -97,11 +108,20 @@ public abstract class AppointmentsDAO {
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
                 String type = rs.getString("Type");
-                String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
-                currMonthList.add(appt);
+                if (type == "Service") {
+                    String service = rs.getString("Concerns");
+                    ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
+                            startTimestamp, endTimestamp);
+                    currMonthList.add(appt);
+                }
+                else {
+                    String concerns = rs.getString("Concerns");
+                    Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
+                            startTimestamp, endTimestamp);
+                    currMonthList.add(appt);
+                }
             }
         }
         catch (SQLException throwables) {
@@ -141,11 +161,22 @@ public abstract class AppointmentsDAO {
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
                 String type = rs.getString("Type");
-                String concerns = rs.getString("Concerns");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns, startTimestamp, endTimestamp);
-                currWeekList.add(appt);
+                if (type == "Service") {
+                    String service = rs.getString("Concerns");
+                    ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
+                            startTimestamp, endTimestamp);
+                    currWeekList.add(appt);
+
+                }
+                else {
+                    String concerns = rs.getString("Concerns");
+                    Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
+                            startTimestamp, endTimestamp);
+                    currWeekList.add(appt);
+                }
+
             }
         }
         catch (SQLException throwables) {
@@ -186,11 +217,21 @@ public abstract class AppointmentsDAO {
                 int advisorId = rs.getInt("Advisor_ID");
                 int techId = rs.getInt("Tech_ID");
                 String type = rs.getString("Type");
-                String concern = rs.getString("Concern");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
-                Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concern, startTimestamp, endTimestamp);
-                techApptList.add(appt);
+                if (type == "Service") {
+                    String service = rs.getString("Concerns");
+                    ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
+                            startTimestamp, endTimestamp);
+                    techApptList.add(appt);
+
+                }
+                else {
+                    String concerns = rs.getString("Concerns");
+                    Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
+                            startTimestamp, endTimestamp);
+                    techApptList.add(appt);
+                }
             }
         }
         catch (SQLException throwables) {

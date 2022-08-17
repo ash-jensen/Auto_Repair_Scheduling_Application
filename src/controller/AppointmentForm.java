@@ -84,6 +84,7 @@ public class AppointmentForm implements Initializable {
     private int techId;
     private String type;
     private String concerns;
+    private String service;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
