@@ -142,19 +142,28 @@ public class AppointmentForm implements Initializable {
                 type = appointment.getType();
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
-                    ApptConcernsField.setText(service);
                     ServiceRB.setSelected(true);
+                    // In ServiceRBAction:
+                    ConcernLabel.setText("Service Type");
+                    ApptConcernsField.setVisible(false);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setVisible(true);
+                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
                     TechComboBox.setVisibleRowCount(5);
                     TechComboBox.setItems(techList);
-                    System.out.println("Service Appt");
+
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
+                    // In DiagnosticRBAction:
+                    ConcernLabel.setText("Concerns");
+                    ApptServiceTypeComboBox.setVisible(false);
+                    ApptConcernsField.setVisible(true);
 
                     // Fill combo box with Line Techs
                     techList = TechDAO.getTechByType("Line Tech");
@@ -185,24 +194,33 @@ public class AppointmentForm implements Initializable {
                 EndTimeComboBox.setValue(endTime);
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
-                    ApptConcernsField.setText(service);
                     ServiceRB.setSelected(true);
+                    // In ServiceRBAction:
+                    ConcernLabel.setText("Service Type");
+                    ApptConcernsField.setVisible(false);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setVisible(true);
+                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
                     TechComboBox.setVisibleRowCount(5);
                     TechComboBox.setItems(techList);
-                    System.out.println("Service Appt");
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
+                    // In DiagnosticRBAction:
+                    ConcernLabel.setText("Concerns");
+                    ApptServiceTypeComboBox.setVisible(false);
+                    ApptConcernsField.setVisible(true);
 
                     // Fill combo box with Line Techs
                     techList = TechDAO.getTechByType("Line Tech");
                     TechComboBox.setVisibleRowCount(5);
                     TechComboBox.setItems(techList);
+                    TechComboBox.setValue(concerns);
                 }
             }
         });
@@ -228,19 +246,28 @@ public class AppointmentForm implements Initializable {
                 EndTimeComboBox.setValue(endTime);
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
-                    ApptConcernsField.setText(service);
                     ServiceRB.setSelected(true);
+                    // In ServiceRBAction:
+                    ConcernLabel.setText("Service Type");
+                    ApptConcernsField.setVisible(false);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setVisible(true);
+                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
                     TechComboBox.setVisibleRowCount(5);
                     TechComboBox.setItems(techList);
-                    System.out.println("Service Appt");
+
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
+                    // In DiagnosticRBAction:
+                    ConcernLabel.setText("Concerns");
+                    ApptServiceTypeComboBox.setVisible(false);
+                    ApptConcernsField.setVisible(true);
 
                     // Fill combo box with Line Techs
                     techList = TechDAO.getTechByType("Line Tech");
@@ -281,8 +308,7 @@ public class AppointmentForm implements Initializable {
         AllTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         AllStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         AllEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        AllConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
-        AllServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
+        AllConcernsCol.setCellValueFactory(new PropertyValueFactory<>("specialtyDisplay"));
 
         // Populate Current Month table on schedule form
         CurrMonthTable.setItems(AppointmentsDAO.getCurrMonthApptData());
@@ -292,8 +318,7 @@ public class AppointmentForm implements Initializable {
         CurrMonthTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         CurrMonthStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrMonthEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        CurrMonthConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
-        CurrMonthServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
+        CurrMonthConcernsCol.setCellValueFactory(new PropertyValueFactory<>("specialtyDisplay"));
 
         // Populate Current Week table on schedule form
         CurrWeekTable.setItems(AppointmentsDAO.getCurrWeekApptData());
@@ -303,8 +328,7 @@ public class AppointmentForm implements Initializable {
         CurrWeekTechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
         CurrWeekStartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
         CurrWeekEndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-        CurrWeekConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
-        CurrWeekServiceCol.setCellValueFactory(new PropertyValueFactory<>("service"));
+        CurrWeekConcernsCol.setCellValueFactory(new PropertyValueFactory<>("specialtyDisplay"));
     }
 
     /**
@@ -478,10 +502,11 @@ public class AppointmentForm implements Initializable {
                 advisorId = ((Advisor) AdvisorComboBox.getSelectionModel().getSelectedItem()).getId();
                 if (ServiceRB.isSelected()) {
                     type = "Service";
+                    concerns = (String) ApptServiceTypeComboBox.getSelectionModel().getSelectedItem();
                 } else {
                     type = "Diagnostic";
+                    concerns = ApptConcernsField.getText();
                 }
-                concerns = ApptConcernsField.getText();
                 date = DatePicker.getValue();
                 startTime = (LocalTime) StartTimeComboBox.getSelectionModel().getSelectedItem();
                 endTime = (LocalTime) EndTimeComboBox.getSelectionModel().getSelectedItem();

@@ -44,4 +44,9 @@ public class ServiceAppointment extends Appointment {
         serviceTypes.add("100K Service");
         return serviceTypes;
     }
+
+    @Override
+    public String getSpecialtyDisplay(){
+        return service;
+    }
 }

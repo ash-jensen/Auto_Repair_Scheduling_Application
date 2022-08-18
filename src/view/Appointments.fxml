@@ -66,8 +66,7 @@
                                   <TableColumn fx:id="AllCustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
                                     <TableColumn fx:id="AllAdvisorIdCol" maxWidth="75.0" minWidth="-Infinity" prefWidth="75.0" text="Advisor" />
                                     <TableColumn fx:id="AllTechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
-                                    <TableColumn fx:id="AllServiceCol" maxWidth="75.0" minWidth="125.0" prefWidth="100.0" text="Service" />
-                                    <TableColumn fx:id="AllConcernsCol" maxWidth="75.0" minWidth="125.0" prefWidth="100.0" text="Concerns" />
+                                    <TableColumn fx:id="AllConcernsCol" maxWidth="214.0" minWidth="249.0" prefWidth="249.0" text="Service/Concerns" />
                                     <TableColumn fx:id="AllStartDateTimeCol" maxWidth="255.0" minWidth="145.0" prefWidth="145.0" text="Start Date/Time" />
                                     <TableColumn fx:id="AllEndDateTimeCol" maxWidth="327.0" minWidth="145.0" prefWidth="145.0" text="End Date/Time" />
                                 </columns>
@@ -82,8 +81,7 @@
                                     <TableColumn fx:id="CurrMonthCustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
                                     <TableColumn fx:id="CurrMonthAdvisorIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Advisor" />
                                     <TableColumn fx:id="CurrMonthTechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
-                                    <TableColumn fx:id="CurrMonthServiceCol" maxWidth="250.0" minWidth="125.0" prefWidth="125.0" text="Service" />
-                                    <TableColumn fx:id="CurrMonthConcernsCol" maxWidth="250.0" minWidth="125.0" prefWidth="125.0" text="Concerns" />
+                                    <TableColumn fx:id="CurrMonthConcernsCol" maxWidth="250.0" minWidth="249.0" prefWidth="249.0" text="Service/Concerns" />
                                     <TableColumn fx:id="CurrMonthStartDateTimeCol" maxWidth="145.0" minWidth="145.0" prefWidth="115.0" text="Start Date/Time" />
                                     <TableColumn fx:id="CurrMonthEndDateTimeCol" maxWidth="145.0" minWidth="145.0" prefWidth="145.0" text="End Date/Time" />
                                  </columns>
@@ -98,8 +96,7 @@
                                     <TableColumn fx:id="CurrWeekCustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
                                     <TableColumn fx:id="CurrWeekAdvisorIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Advisor" />
                                     <TableColumn fx:id="CurrWeekTechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
-                                    <TableColumn fx:id="CurrWeekServiceCol" maxWidth="250.0" minWidth="125.0" prefWidth="125.0" text="Service" />
-                                    <TableColumn fx:id="CurrWeekConcernsCol" maxWidth="250.0" minWidth="125.0" prefWidth="125.0" text="Concerns" />
+                                    <TableColumn fx:id="CurrWeekConcernsCol" maxWidth="250.0" minWidth="249.0" prefWidth="249.0" text="Service/Concerns" />
                                     <TableColumn fx:id="CurrWeekStartDateTimeCol" maxWidth="145.0" minWidth="145.0" prefWidth="145.0" text="Start Date/Time" />
                                     <TableColumn fx:id="CurrWeekEndDateTimeCol" maxWidth="145.0" minWidth="145.0" prefWidth="115.0" text="End Date/Time" />
                                  </columns>

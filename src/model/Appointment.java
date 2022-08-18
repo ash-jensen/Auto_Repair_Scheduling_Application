@@ -296,4 +296,7 @@ public class Appointment {
         return monthsOfYear;
     }
 
+    public String getSpecialtyDisplay(){
+        return concerns;
+    }
 }
