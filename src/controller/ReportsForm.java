@@ -43,6 +43,7 @@ public class ReportsForm implements Initializable {
     public TableColumn ConcernsCol;
     public ComboBox TechComboBox;
     public Label CustomerNumbers;
+    public ComboBox ApptTypeComboBox;
     private ObservableList<String> monthsOfYear = observableArrayList();
     private ObservableList<String> apptTypeList = observableArrayList();
     private ObservableList<Tech> techList = observableArrayList();
@@ -74,9 +75,9 @@ public class ReportsForm implements Initializable {
         MonthComboBox.setItems(monthsOfYear);
 
         // Fill tech combo box
-        techList = TechDAO.getTechData();
-        TechComboBox.setVisibleRowCount(5);
-        TechComboBox.setItems(techList);
+        apptTypeList = Appointment.getAllApptTypes();
+        ApptTypeComboBox.setVisibleRowCount(5);
+        ApptTypeComboBox.setItems(apptTypeList);
     }
 
     /**
@@ -125,14 +126,12 @@ public class ReportsForm implements Initializable {
         }
     }
 
-
-// **** FIX ME ******
     /**
      * This method gets input from month/appointment type combo boxes and calls getNumAppts from AppointmentsDAO to
      * return number of appointments matching that month and appointment type, otherwise alerts nothing found.
      * @param actionEvent on OK button click
      */
-    /*
+
     public void NumApptsOkayButtonAction(ActionEvent actionEvent) {
 
         Alert alert;
@@ -156,7 +155,6 @@ public class ReportsForm implements Initializable {
             alert.showAndWait();
         }
     }
-    */
 
     /**
      * This method gets the techId of the chosen contact and gets the appointments scheduled for them, then fills

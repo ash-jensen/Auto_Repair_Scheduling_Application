@@ -267,11 +267,8 @@ public class Appointment {
      */
     public static ObservableList<String> getAllApptTypes() {
         apptTypes.clear();
-        apptTypes.add("Planning Session");
-        apptTypes.add("De-Briefing");
-        apptTypes.add("Meeting");
-        apptTypes.add("Code Review");
-        apptTypes.add("Other");
+        apptTypes.add("Service");
+        apptTypes.add("Diagnostic");
         return apptTypes;
     }
 
