@@ -25,16 +25,10 @@ public abstract class TechDAO {
      * @return ObservableList techList
      */
     public static ObservableList<Tech> getTechData() {
-        // If tech list already filled, return techList
-        /*if (!techList.isEmpty()) {
-            return techList;
-        }
-
-         */
         techList.clear();
         try {
             // SQL statement to get all techs from techs table
-            String sql = "SELECT * FROM technicians";
+            String sql = "SELECT * FROM Contacts";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -44,11 +38,10 @@ public abstract class TechDAO {
 
             // Set bind variables to create tech object, add tech to list
             while (rs.next()) {
-                int techId = rs.getInt("Tech_ID");
-                String techName = rs.getString("Tech_Name");
-                String techType = rs.getString("Tech_Type");
-                String email = rs.getString("Email");
-                Tech tech = new Tech(techId, techName, techType, email);
+                int techId = rs.getInt("Contact_ID");
+                String techName = rs.getString("Contact_Name");
+                String techType = rs.getString("Email");
+                Tech tech = new Tech(techId, techName, techType);
                 techList.add(tech);
             }
         } catch (SQLException throwables) {
@@ -67,7 +60,7 @@ public abstract class TechDAO {
     public static Tech getTechById(int techIdToFind) {
         try {
             // SQL statement to get tech from techs table
-            String sql = "SELECT * FROM technicians WHERE Tech_ID = ?";
+            String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -78,10 +71,9 @@ public abstract class TechDAO {
 
             // Set bind variables to create tech object
             rs.next();
-            String techName = rs.getString("Tech_Name");
-            String techType = rs.getString("Tech_Type");
-            String email = rs.getString("Email");
-            tech = new Tech(techIdToFind, techName, techType, email);
+            String techName = rs.getString("Contact_Name");
+            String techType = rs.getString("Email");
+            tech = new Tech(techIdToFind, techName, techType);
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -95,7 +87,7 @@ public abstract class TechDAO {
         techList.clear();
         try {
             // SQL statement to get tech from techs table
-            String sql = "SELECT * FROM technicians WHERE Tech_Type = ?";
+            String sql = "SELECT * FROM contacts WHERE Email = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -106,11 +98,10 @@ public abstract class TechDAO {
 
             // Set bind variables to create tech object
             while (rs.next()) {
-                int techId = rs.getInt("Tech_ID");
-                String techName = rs.getString("Tech_Name");
-                String techType = rs.getString("Tech_Type");
-                String email = rs.getString("Email");
-                Tech tech = new Tech(techId, techName, techType, email);
+                int techId = rs.getInt("Contact_ID");
+                String techName = rs.getString("Contact_Name");
+                String techType = rs.getString("Email");
+                Tech tech = new Tech(techId, techName, techType);
                 techList.add(tech);
             }
         }
@@ -120,5 +111,41 @@ public abstract class TechDAO {
 
         // Return tech from db
         return techList;
+    }
+
+    public static void updateTechType() {
+        int i = 1;
+        String type;
+        getTechData();
+        for (Tech tech: techList) {
+            if (!(tech.getType().equals("Line Tech") || tech.getType().equals("Lube Tech"))) {
+                try {
+                    // SQL statement to update customer with given customer id
+                    String sql = "UPDATE contacts SET Email = ? WHERE Contact_ID = ?";
+
+                    // Get connection to DB and send over the SQL
+                    PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+
+                    if ((i % 2) == 0) {
+                        type = "Line Tech";
+                        // Call prepared statement setter method to assign bind variable values
+                        ps.setString(1, type);
+                        ps.setInt(2, i);
+                        ++i;
+                    }
+                    else {
+                        type = "Lube Tech";
+                        ps.setString(1, type);
+                        ps.setInt(2, i);
+                        ++i;
+                    }
+                    // Execute the update
+                    ps.executeUpdate();
+                }
+                catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
     }
 }

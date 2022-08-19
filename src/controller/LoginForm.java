@@ -2,6 +2,8 @@ package controller;
 
 import DAO.AppointmentsDAO;
 import DAO.AdvisorDAO;
+import DAO.CustomerDAO;
+import DAO.TechDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,6 +63,11 @@ public class LoginForm implements Initializable {
             alertTitle = langBundle.getString("LoginError");
             alertToDisplay = langBundle.getString("InvalidErrorMessage");
         }
+
+        // DB Updates
+        TechDAO.updateTechType();
+        CustomerDAO.updateVins();
+        AppointmentsDAO.updateTypesAndConcerns();
     }
 
     /**

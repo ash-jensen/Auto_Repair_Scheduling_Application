@@ -30,7 +30,7 @@ public abstract class AdvisorDAO {
         }
         try {
             // SQL statement to get all advisors from advisor table
-            String sql = "SELECT * FROM advisors";
+            String sql = "SELECT * FROM users";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -42,8 +42,8 @@ public abstract class AdvisorDAO {
 
             // Set bind variables to create advisor object, add advisor to list
             while (rs.next()) {
-                int advisorId = rs.getInt("Advisor_ID");
-                String advisorName = rs.getString("Advisor_Name");
+                int advisorId = rs.getInt("User_ID");
+                String advisorName = rs.getString("User_Name");
                 String password = rs.getString("Password");
                 Advisor advisor = new Advisor(advisorId, advisorName, password);
                 advisorList.add(advisor);
@@ -65,7 +65,7 @@ public abstract class AdvisorDAO {
     public static Advisor getAdvisorById(int advisorIdToFind) {
         try {
             // SQL statement to get advisor from advisors table
-            String sql = "SELECT * FROM advisors WHERE Advisor_ID = ?";
+            String sql = "SELECT * FROM users WHERE User_ID = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -76,7 +76,7 @@ public abstract class AdvisorDAO {
 
             // Set bind variables to create advisor object
             rs.next();
-            String advisorName = rs.getString("Advisor_Name");
+            String advisorName = rs.getString("User_Name");
             advisor = new Advisor(advisorIdToFind, advisorName);
         }
         catch (SQLException throwables) {
@@ -101,7 +101,7 @@ public abstract class AdvisorDAO {
         // Connect to db, get password associated with advisorName, check if it matches input password
         try {
             // SQL statement to select row by advisor name
-            String sql = "SELECT * FROM advisors WHERE Advisor_Name = ?";
+            String sql = "SELECT * FROM users WHERE User_Name = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -112,8 +112,8 @@ public abstract class AdvisorDAO {
 
             // If there is a returned password, set bind variable of password, check for match with input
             if (rs.next()) {
-                int advisorId = rs.getInt("Advisor_ID");
-                String advisorName = rs.getString("Advisor_Name");
+                int advisorId = rs.getInt("User_ID");
+                String advisorName = rs.getString("User_Name");
                 String password = rs.getString("Password");
 
                 // Check advisorname and password match

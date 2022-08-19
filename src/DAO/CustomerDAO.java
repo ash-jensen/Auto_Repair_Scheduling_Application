@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import model.Customer;
+import model.Tech;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +50,7 @@ public abstract class CustomerDAO {
                 String custAddress = rs.getString("Address");
                 String custPostalCode = rs.getString("Postal_Code");
                 String custPhoneNumber = rs.getString("Phone");
-                String custVin = rs.getString("VIN");
+                String custVin = rs.getString("Created_By");
                 int custDivId = rs.getInt("Division_ID");
                 Customer cust = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
                 customerList.add(cust);
@@ -78,7 +79,7 @@ public abstract class CustomerDAO {
 
         try {
             // SQL statement to insert customer in customers table
-            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, VIN, Division_ID) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Created_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?)";
 
             // Get connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -127,7 +128,7 @@ public abstract class CustomerDAO {
         if(result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 // SQL statement to update customer with given customer id
-                String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, VIN = ?, Division_ID = ? WHERE Customer_ID = ?";
+                String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Created_By = ?, Division_ID = ? WHERE Customer_ID = ?";
 
                 // Get connection to DB and send over the SQL
                 PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -228,7 +229,7 @@ public abstract class CustomerDAO {
             String custAddress = rs.getString("Address");
             String custPostalCode = rs.getString("Postal_Code");
             String custPhoneNumber = rs.getString("Phone");
-            String custVin = rs.getString("VIN");
+            String custVin = rs.getString("Created_By");
             int custDivId = rs.getInt("Division_ID");
             customer = new Customer(custIdToFind, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
         }
@@ -239,6 +240,49 @@ public abstract class CustomerDAO {
         // Return customer from db
         return customer;
     }
+
+    public static void updateVins() {
+        int i = 1;
+        String vin;
+        getCustomerData();
+        for (Customer customer: customerList) {
+            if (customer.getVin().equals("script")) {
+                try {
+                    // SQL statement to update customer with given customer id
+                    String sql = "UPDATE customers SET Created_By = ? WHERE Customer_ID = ?";
+
+                    // Get connection to DB and send over the SQL
+                    PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+
+                    if (i == 1) {
+                        vin = "JH4NA1150PT000087";
+                        // Call prepared statement setter method to assign bind variable values
+                        ps.setString(1, vin);
+                        ps.setInt(2, i);
+                        ++i;
+                    }
+                    else if (i == 2) {
+                        vin = "1B4HS28N51F547639";
+                        ps.setString(1, vin);
+                        ps.setInt(2, i);
+                        ++i;
+                    }
+                    else if (i == 3) {
+                        vin = "5N1AL0MM4DC301508";
+                        ps.setString(1, vin);
+                        ps.setInt(2, i);
+                        ++i;
+                    }
+                    // Execute the update
+                    ps.executeUpdate();
+                }
+                catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+    }
+
 }
 
 

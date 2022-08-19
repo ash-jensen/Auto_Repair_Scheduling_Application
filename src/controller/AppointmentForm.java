@@ -143,12 +143,12 @@ public class AppointmentForm implements Initializable {
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
                     ServiceRB.setSelected(true);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setValue(service);
                     // In ServiceRBAction:
                     ConcernLabel.setText("Service Type");
                     ApptConcernsField.setVisible(false);
-                    ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setVisible(true);
-                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
@@ -195,12 +195,12 @@ public class AppointmentForm implements Initializable {
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
                     ServiceRB.setSelected(true);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setValue(service);
                     // In ServiceRBAction:
                     ConcernLabel.setText("Service Type");
                     ApptConcernsField.setVisible(false);
-                    ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setVisible(true);
-                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
@@ -247,12 +247,12 @@ public class AppointmentForm implements Initializable {
                 if (appointment instanceof ServiceAppointment) {
                     service = ((ServiceAppointment) appointment).getService();
                     ServiceRB.setSelected(true);
+                    ApptConcernsField.clear();
+                    ApptServiceTypeComboBox.setValue(service);
                     // In ServiceRBAction:
                     ConcernLabel.setText("Service Type");
                     ApptConcernsField.setVisible(false);
-                    ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setVisible(true);
-                    ApptServiceTypeComboBox.setValue(service);
 
                     // Fill combo box with Lube Techs
                     techList = TechDAO.getTechByType("Lube Tech");
@@ -292,6 +292,7 @@ public class AppointmentForm implements Initializable {
 
         } );
 
+        // Hide Service Combo Box
         ApptServiceTypeComboBox.setVisible(false);
     }
 
