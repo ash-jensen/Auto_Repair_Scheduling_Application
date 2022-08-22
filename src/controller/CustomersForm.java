@@ -378,6 +378,10 @@ public class CustomersForm implements Initializable {
         return hasText;
     }
 
+    /**
+     * This method searches executes a search for customer name or customer id number.
+     * @param actionEvent on enter in search field
+     */
     public void SearchCustNameAction(ActionEvent actionEvent) {
         // Get text from search box
         String toSearch = SearchField.getText();

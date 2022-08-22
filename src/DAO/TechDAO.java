@@ -83,6 +83,11 @@ public abstract class TechDAO {
         return tech;
     }
 
+    /**
+     * This method gets all techs by type passed in, either Line Tech or Lube Tech.
+     * @param type String of Line or Lube Tech
+     * @return ObservalbeList of techs of the passed in type
+     */
     public static ObservableList<Tech> getTechByType(String type) {
         techList.clear();
         try {
@@ -113,6 +118,9 @@ public abstract class TechDAO {
         return techList;
     }
 
+    /**
+     * This method updates information for capstone use with the C195 database
+     */
     public static void updateTechType() {
         int i = 1;
         String type;

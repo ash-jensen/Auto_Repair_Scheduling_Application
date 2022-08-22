@@ -245,7 +245,7 @@ public abstract class CustomerDAO {
 
     /**
      * This method finds customers by their name in the database and returns a list of matching customer names. It takes
-     * String custIdToFind and searches the database, then makes a Customer object and adds it to CustomerList to return
+     * String custNameToFind and searches the database, then makes a Customer object and adds it to CustomerList to return
      * @param custNameToFind the String customer name to find in the database
      * @return observableList of customers with matching names
      */
@@ -285,6 +285,12 @@ public abstract class CustomerDAO {
         return customersByName;
     }
 
+    /**
+     * This method finds customers by their id number in the database and returns a list of matching customers. It takes
+     * int custIdToFind and searches the database, then makes a Customer object and adds it to the list to return
+     * @param custIdToFind the int customer id to find in the database
+     * @return observableList of customers with matching id numbers
+     */
     public static ObservableList<Customer> getCustomersById(int custIdToFind) {
         try {
             // SQL statement to get all customers from customer table
@@ -318,6 +324,9 @@ public abstract class CustomerDAO {
         return customersById;
     }
 
+    /**
+     * This method updates information for capstone use with the C195 database
+     */
     public static void updateVins() {
         int i = 1;
         String vin;

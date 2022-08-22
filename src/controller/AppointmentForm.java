@@ -99,13 +99,8 @@ public class AppointmentForm implements Initializable {
     ObservableList<String> serviceTypes = observableArrayList();
 
     /**
-     * CONTAINS MULTIPLE LAMBDA EXPRESSIONS: The first three lambda expressions gets a selected appointment from AllApptsTable, CurrMonthTable,
-     * or CurrWeekTable and put it's information into the AppointmentForm fields. they takes parameters of object,
-     * oldSelection, and newSelection and if there is a new selection, it fills in the appointment fields.
-     * The fourth lambda expression takes in an event from Exit button click and confirms the Advisor would like to quit,
-     * then closes the program.
-     *
-     * This method initializes AppointmentForm.
+     * This method initializes AppointmentForm. It gets the selected item from tableViews in the form, sets the ExitButton
+     * action to confirm with the user, and sets the apptServiceTypeComboBox not to show.
      * @param url is the location
      * @param resourceBundle is resources used
      */
@@ -566,8 +561,14 @@ public class AppointmentForm implements Initializable {
         return hasText;
     }
 
+    /**
+     * This method changes the radio button from Diagnostic to Service. The concern label is changed to "Service",
+     * ApptConcernsField is made invisible, while ApptServiceTypeComboBox is set visible, and TechComboBox is filled
+     * with only Lube Techs.
+     * @param actionEvent on radio button click
+     */
     public void ServiceRBAction(ActionEvent actionEvent) {
-        ConcernLabel.setText("Service Type");
+        ConcernLabel.setText("Service");
         ApptConcernsField.setVisible(false);
         ApptServiceTypeComboBox.setVisible(true);
         techList = TechDAO.getTechByType("Lube Tech");
@@ -575,6 +576,12 @@ public class AppointmentForm implements Initializable {
         TechComboBox.setItems(techList);
     }
 
+    /**
+     * This method changes the radio button from Service to Diagnostic. The concern label is changed to "Diagnostic",
+     * ApptConcernsField is made visible, while ApptServiceTypeComboBox is made invisible, and TechComboBox is filled
+     * with only Line Techs.
+     * @param actionEvent on radio button click
+     */
     public void DiagnosticRBAction(ActionEvent actionEvent) {
         ConcernLabel.setText("Concerns");
         ApptServiceTypeComboBox.setVisible(false);

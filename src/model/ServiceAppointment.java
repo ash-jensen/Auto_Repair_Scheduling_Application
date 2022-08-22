@@ -6,11 +6,28 @@ import java.sql.Timestamp;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * This class ServiceAppointments is used to make Service Appointment objects, and includes getters/setters for id, custId, advisorId, techId, service, type,
+ * startTimestamp, and endTimestamp.
+ *
+ * @author Ashley Jensen
+ */
 public class ServiceAppointment extends Appointment {
     private String service;
-
     private static ObservableList<String> serviceTypes = observableArrayList();
 
+    /**
+     * This is the ServiceAppointment constructor with id, custId, advisorId, techId, service, type,
+     * startTimestamp, and endTimestamp.
+     * @param id sets integer id
+     * @param custId sets integer custId
+     * @param advisorId sets integer advisorId
+     * @param techId sets integer techId
+     * @param type sets String type
+     * @param service sets String concerns
+     * @param startTimestamp sets Timestamp startTimestamp
+     * @param endTimestamp sets Timestamp endTimestamp
+     */
     public ServiceAppointment(int id, int custId, int advisorId, int techId, String type, String service,
                               Timestamp startTimestamp, Timestamp endTimestamp) {
         super(id, custId, advisorId, techId, type, startTimestamp, endTimestamp);
@@ -18,10 +35,18 @@ public class ServiceAppointment extends Appointment {
         this.service = service;
     }
 
+    /**
+     * This method returns service.
+     * @return String service
+     */
     public String getService() {
         return service;
     }
 
+    /**
+     * This method sets service variable with service parameter
+     * @param service sets String service
+     */
     public void setService(String service) {
         this.service = service;
     }
@@ -45,6 +70,10 @@ public class ServiceAppointment extends Appointment {
         return serviceTypes;
     }
 
+    /**
+     * This method returns String of service to be input into tableView.
+     * @return String service
+     */
     @Override
     public String getSpecialtyDisplay(){
         return service;

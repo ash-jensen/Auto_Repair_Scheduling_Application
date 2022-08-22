@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * This class Appointments is used to make Diagnostic and Service Appointment objects, and includes getters/setters for id, custId, advisorId, techId, title, concerns, location, type,
+ * This class Appointments is used to make Diagnostic Appointment objects, and includes getters/setters for id, custId, advisorId, techId, concerns, type,
  * startTimestamp, and endTimestamp.
  *
  * @author Ashley Jensen
@@ -67,13 +67,13 @@ public class Appointment {
     private static ObservableList<String> monthsOfYear = observableArrayList();
 
     /**
-     * This is the Appointment constructor with id, custId, advisorId, techId, title, concerns, location, type,
+     * This is the Appointment constructor with id, custId, advisorId, techId, concerns, type,
      * startTimestamp, and endTimestamp.
      * @param id sets integer id
      * @param custId sets integer custId
      * @param advisorId sets integer advisorId
      * @param techId sets integer techId
-     * @param type
+     * @param type sets String type
      * @param concerns sets String concerns
      * @param startTimestamp sets Timestamp startTimestamp
      * @param endTimestamp sets Timestamp endTimestamp
@@ -89,6 +89,17 @@ public class Appointment {
         this.endTimestamp = endTimestamp;
     }
 
+    /**
+     * This is another Appointment constructor with id, custId, advisorId, techId, concerns, type,
+     * startTimestamp, and endTimestamp.
+     * @param id sets integer id
+     * @param custId sets integer custId
+     * @param advisorId sets integer advisorId
+     * @param techId sets integer techId
+     * @param type sets String type
+     * @param startTimestamp sets Timestamp startTimestamp
+     * @param endTimestamp sets Timestamp endTimestamp
+     */
     public Appointment(int id, int custId, int advisorId, int techId, String type, Timestamp startTimestamp, Timestamp endTimestamp) {
         this.id = id;
         this.custId = custId;
@@ -293,6 +304,9 @@ public class Appointment {
         return monthsOfYear;
     }
 
+    /** This method returns String of concerns to be input into a tableview.
+     * @return String concerns
+     */
     public String getSpecialtyDisplay(){
         return concerns;
     }
