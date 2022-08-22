@@ -21,6 +21,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public abstract class CustomerDAO {
     private static ObservableList<Customer> customerList = observableArrayList();
+    private static ObservableList<Customer> customersByName = observableArrayList();
+    private static ObservableList<Customer> customersById = observableArrayList();
     private static Customer customer;
 
     /**
@@ -239,6 +241,81 @@ public abstract class CustomerDAO {
 
         // Return customer from db
         return customer;
+    }
+
+    /**
+     * This method finds customers by their name in the database and returns a list of matching customer names. It takes
+     * String custIdToFind and searches the database, then makes a Customer object and adds it to CustomerList to return
+     * @param custNameToFind the String customer name to find in the database
+     * @return observableList of customers with matching names
+     */
+    public static ObservableList<Customer> getCustomersByName(String custNameToFind) {
+        try {
+            // SQL statement to get all customers from customer table
+            String sql = "SELECT * FROM customers WHERE Customer_Name LIKE ?";
+
+            // Get a connection to DB and send over the SQL
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, "%" + custNameToFind + "%");
+
+            // Get results of query
+            ResultSet rs = ps.executeQuery();
+
+            // Clear customer by name list
+            customersByName.clear();
+
+            // Set bind variables to create customer object, add customer to list
+            while(rs.next()) {
+                int custId = rs.getInt("Customer_ID");
+                String custName = rs.getString("Customer_Name");
+                String custAddress = rs.getString("Address");
+                String custPostalCode = rs.getString("Postal_Code");
+                String custPhoneNumber = rs.getString("Phone");
+                String custVin = rs.getString("Created_By");
+                int custDivId = rs.getInt("Division_ID");
+                Customer customer = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
+                customersByName.add(customer);
+            }
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        // Return customer from db
+        return customersByName;
+    }
+
+    public static ObservableList<Customer> getCustomersById(int custIdToFind) {
+        try {
+            // SQL statement to get all customers from customer table
+            String sql = "SELECT * FROM customers WHERE Customer_ID LIKE ?";
+
+            // Get a connection to DB and send over the SQL
+            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+            ps.setString(1, "%" + custIdToFind + "%");
+
+            // Get results of query
+            ResultSet rs = ps.executeQuery();
+
+            // Set bind variables to create customer object, add customer to list
+            while(rs.next()) {
+                int custId = rs.getInt("Customer_ID");
+                String custName = rs.getString("Customer_Name");
+                String custAddress = rs.getString("Address");
+                String custPostalCode = rs.getString("Postal_Code");
+                String custPhoneNumber = rs.getString("Phone");
+                String custVin = rs.getString("Created_By");
+                int custDivId = rs.getInt("Division_ID");
+                Customer customer = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
+                customersById.add(customer);
+            }
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        // Return customer from db
+        return customersById;
     }
 
     public static void updateVins() {

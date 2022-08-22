@@ -145,30 +145,13 @@ public class AppointmentForm implements Initializable {
                     ServiceRB.setSelected(true);
                     ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setValue(service);
-                    // In ServiceRBAction:
-                    ConcernLabel.setText("Service Type");
-                    ApptConcernsField.setVisible(false);
-                    ApptServiceTypeComboBox.setVisible(true);
-
-                    // Fill combo box with Lube Techs
-                    techList = TechDAO.getTechByType("Lube Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
-
+                    ServiceRBAction(null);
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
-                    // In DiagnosticRBAction:
-                    ConcernLabel.setText("Concerns");
-                    ApptServiceTypeComboBox.setVisible(false);
-                    ApptConcernsField.setVisible(true);
-
-                    // Fill combo box with Line Techs
-                    techList = TechDAO.getTechByType("Line Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
+                    DiagnosticRBAction(null);
                 }
             }
         });
@@ -197,30 +180,13 @@ public class AppointmentForm implements Initializable {
                     ServiceRB.setSelected(true);
                     ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setValue(service);
-                    // In ServiceRBAction:
-                    ConcernLabel.setText("Service Type");
-                    ApptConcernsField.setVisible(false);
-                    ApptServiceTypeComboBox.setVisible(true);
-
-                    // Fill combo box with Lube Techs
-                    techList = TechDAO.getTechByType("Lube Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
+                    ServiceRBAction(null);
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
-                    // In DiagnosticRBAction:
-                    ConcernLabel.setText("Concerns");
-                    ApptServiceTypeComboBox.setVisible(false);
-                    ApptConcernsField.setVisible(true);
-
-                    // Fill combo box with Line Techs
-                    techList = TechDAO.getTechByType("Line Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
-                    TechComboBox.setValue(concerns);
+                    DiagnosticRBAction(null);
                 }
             }
         });
@@ -249,30 +215,14 @@ public class AppointmentForm implements Initializable {
                     ServiceRB.setSelected(true);
                     ApptConcernsField.clear();
                     ApptServiceTypeComboBox.setValue(service);
-                    // In ServiceRBAction:
-                    ConcernLabel.setText("Service Type");
-                    ApptConcernsField.setVisible(false);
-                    ApptServiceTypeComboBox.setVisible(true);
-
-                    // Fill combo box with Lube Techs
-                    techList = TechDAO.getTechByType("Lube Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
+                    ServiceRBAction(null);
 
                 }
                 else {
                     concerns = appointment.getConcerns();
                     ApptConcernsField.setText(concerns);
                     DiagnosticRB.setSelected(true);
-                    // In DiagnosticRBAction:
-                    ConcernLabel.setText("Concerns");
-                    ApptServiceTypeComboBox.setVisible(false);
-                    ApptConcernsField.setVisible(true);
-
-                    // Fill combo box with Line Techs
-                    techList = TechDAO.getTechByType("Line Tech");
-                    TechComboBox.setVisibleRowCount(5);
-                    TechComboBox.setItems(techList);
+                    DiagnosticRBAction(null);
                 }
             }
         });

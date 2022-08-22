@@ -46,6 +46,7 @@ public class CustomersForm implements Initializable {
     public TableColumn CustTableVin;
     public TextField CustConcernField;
     public TextField CustVinField;
+    public TextField SearchField;
     private Customer customer;
     private int id;
     private String name;
@@ -57,6 +58,7 @@ public class CustomersForm implements Initializable {
     private int divId;
     private ObservableList<Country> countryList;
     private ObservableList<Division> divisionList;
+    private ObservableList<Customer> searchedCustomers;
     private Country selectedCountry;
 
     /**
@@ -374,5 +376,50 @@ public class CustomersForm implements Initializable {
             hasText = false;
         }
         return hasText;
+    }
+
+    public void SearchCustNameAction(ActionEvent actionEvent) {
+        // Get text from search box
+        String toSearch = SearchField.getText();
+
+        // Search part list for Part Name
+        searchedCustomers = CustomerDAO.getCustomersByName(toSearch);
+
+        // if string match not found, try changing to int and search for Part ID
+        if(searchedCustomers.size() == 0) {
+            try{
+                int custId = Integer.parseInt(toSearch);
+                Customer foundCustomer = CustomerDAO.getCustomerById(custId);
+                if (foundCustomer != null) {
+                    searchedCustomers.add(foundCustomer);
+                }
+            }
+            catch (NumberFormatException e) {
+                //ignore
+            }
+        }
+
+
+        // If searched item not found, alert user and reload table
+        if (searchedCustomers.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Not Found");
+            alert.setContentText("Customer not found.");
+            alert.showAndWait();
+
+            // Populate Main Form Part Table
+            populateCustTable();
+            return;
+        }
+
+            // Set part table to display list of matching parts
+            CustTable.setItems(searchedCustomers);
+            CustTableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+            CustTableName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            CustTableAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+            CustTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+            CustTablePhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+            CustTableVin.setCellValueFactory(new PropertyValueFactory<>("vin"));
+            CustTableDivId.setCellValueFactory(new PropertyValueFactory<>("divId"));
     }
 }
