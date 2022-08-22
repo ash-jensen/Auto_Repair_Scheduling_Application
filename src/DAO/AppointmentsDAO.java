@@ -55,17 +55,17 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("User_ID");
                 int techId = rs.getInt("Contact_ID");
-                String type = rs.getString("Type");
+                String type = rs.getString("Title");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
                 if (type.equals("Service")) {
-                    String service = rs.getString("Description");
+                    String service = rs.getString("Location");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
                     allApptsList.add(appt);
                 }
                 else {
-                    String concerns = rs.getString("Description");
+                    String concerns = rs.getString("Location");
                     Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
                             startTimestamp, endTimestamp);
                     allApptsList.add(appt);
@@ -107,17 +107,17 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("User_ID");
                 int techId = rs.getInt("Contact_ID");
-                String type = rs.getString("Type");
+                String type = rs.getString("Title");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
                 if (type.equals("Service")) {
-                    String service = rs.getString("Description");
+                    String service = rs.getString("Location");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
                     currMonthList.add(appt);
                 }
                 else {
-                    String concerns = rs.getString("Description");
+                    String concerns = rs.getString("Location");
                     Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
                             startTimestamp, endTimestamp);
                     currMonthList.add(appt);
@@ -160,18 +160,18 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("User_ID");
                 int techId = rs.getInt("Contact_ID");
-                String type = rs.getString("Type");
+                String type = rs.getString("Title");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
                 if (type.equals("Service")) {
-                    String service = rs.getString("Description");
+                    String service = rs.getString("Location");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
                     currWeekList.add(appt);
 
                 }
                 else {
-                    String concerns = rs.getString("Description");
+                    String concerns = rs.getString("Location");
                     Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
                             startTimestamp, endTimestamp);
                     currWeekList.add(appt);
@@ -216,18 +216,18 @@ public abstract class AppointmentsDAO {
                 int custId = rs.getInt("Customer_ID");
                 int advisorId = rs.getInt("User_ID");
                 int techId = rs.getInt("Contact_ID");
-                String type = rs.getString("Type");
+                String type = rs.getString("Title");
                 Timestamp startTimestamp = rs.getTimestamp("Start");
                 Timestamp endTimestamp = rs.getTimestamp("End");
                 if (type == "Service") {
-                    String service = rs.getString("Description");
+                    String service = rs.getString("Location");
                     ServiceAppointment appt = new ServiceAppointment(apptId, custId, advisorId, techId, type, service,
                             startTimestamp, endTimestamp);
                     techApptList.add(appt);
 
                 }
                 else {
-                    String concerns = rs.getString("Description");
+                    String concerns = rs.getString("Location");
                     Appointment appt = new Appointment (apptId, custId, advisorId, techId, type, concerns,
                             startTimestamp, endTimestamp);
                     techApptList.add(appt);
@@ -262,7 +262,7 @@ public abstract class AppointmentsDAO {
         if (overlappingAppts == 0) {
             try {
                 // SQL statement to insert customer in customers table
-                String sql = "INSERT INTO appointments (Customer_ID, User_ID, Contact_ID, Type, Description, Start, End) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO appointments (Customer_ID, User_ID, Contact_ID, Title, Location, Start, End) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 // Get connection to DB and send over the SQL
                 PreparedStatement ps = JDBC.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -326,7 +326,7 @@ public abstract class AppointmentsDAO {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     // SQL statement to insert customer in customers table
-                    String sql = "Update appointments SET Customer_ID = ?, User_ID =?, Contact_ID =?, Type =?, Description =?, Start =?, End =? WHERE Appointment_ID = ?";
+                    String sql = "Update appointments SET Customer_ID = ?, User_ID =?, Contact_ID =?, Title =?, Location =?, Start =?, End =? WHERE Appointment_ID = ?";
 
                     // Get connection to DB and send over the SQL
                     PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -584,7 +584,7 @@ public abstract class AppointmentsDAO {
         int numAppts = 0;
         try {
             // SQL statement to get appointments of month and apptType
-            String sql = "SELECT * FROM appointments WHERE MONTHNAME(Start) = ? AND Type = ?";
+            String sql = "SELECT * FROM appointments WHERE MONTHNAME(Start) = ? AND Title = ?";
 
             // Get a connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -608,31 +608,35 @@ public abstract class AppointmentsDAO {
         return numAppts;
     }
 
-    // TODO fix appt types & concerns method
     public static void updateTypesAndConcerns() {
         int i = 1;
         String type;
-        getTechData();
-        for (Tech tech: techList) {
-            if (!(tech.getType().equals("Line Tech") || tech.getType().equals("Lube Tech"))) {
+        String concern;
+        getAllApptData();
+        for (Appointment appt: allApptsList) {
+            if (!(appt.getType().equals("Service") || appt.getType().equals("Diagnostic"))) {
                 try {
                     // SQL statement to update customer with given customer id
-                    String sql = "UPDATE contacts SET Email = ? WHERE Contact_ID = ?";
+                    String sql = "UPDATE appointments SET Title = ?, Location = ? WHERE Appointment_ID = ?";
 
                     // Get connection to DB and send over the SQL
                     PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
 
                     if ((i % 2) == 0) {
-                        type = "Line Tech";
+                        type = "Diagnostic";
+                        concern = "Oil Leak";
                         // Call prepared statement setter method to assign bind variable values
                         ps.setString(1, type);
-                        ps.setInt(2, i);
+                        ps.setString(2, concern);
+                        ps.setInt(3, i);
                         ++i;
                     }
                     else {
-                        type = "Lube Tech";
+                        type = "Service";
+                        concern = "30K Service";
                         ps.setString(1, type);
-                        ps.setInt(2, i);
+                        ps.setString(2, concern);
+                        ps.setInt(3, i);
                         ++i;
                     }
                     // Execute the update
