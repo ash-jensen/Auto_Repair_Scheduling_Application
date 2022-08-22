@@ -19,14 +19,27 @@
     <children>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="1100.0" spacing="5.0">
             <children>
-                <HBox prefHeight="20.0" prefWidth="840.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="840.0">
                     <children>
                         <Label prefHeight="32.0" prefWidth="171.0" text="Customers">
                             <font>
                                 <Font name="Arial Bold" size="28.0" />
                             </font>
                         </Label>
-                        <HBox alignment="BOTTOM_RIGHT" prefHeight="32.0" prefWidth="875.0" spacing="20.0">
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="239.0" text="Search customers by name or ID:">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="SearchField" onAction="#SearchCustNameAction" prefHeight="25.0" prefWidth="232.0" promptText="Search by Customer Name or ID">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="307.0" spacing="20.0">
                             <children>
                                 <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#AppointmentButtonAction" prefWidth="110.0" style="-fx-background-color: #2a70c7#2a70c7 #2a70c7#2a70c7;" text="Appointments" textFill="WHITE">
                                     <font>
@@ -42,6 +55,9 @@
                                     </font>
                                 </Button>
                             </children>
+                     <HBox.margin>
+                        <Insets left="47.0" />
+                     </HBox.margin>
                         </HBox>
                     </children>
                     <VBox.margin>

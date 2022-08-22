@@ -257,7 +257,7 @@ public abstract class AppointmentsDAO {
      */
     public static int addAppt(int custId, int advisorId, int techId, String type, String concerns, Timestamp startTimestamp, Timestamp endTimestamp) {
         int apptId = 0;
-        int overlappingAppts = overlapCheck(custId, startTimestamp, endTimestamp);
+        int overlappingAppts = overlapCheck(techId, startTimestamp, endTimestamp);
 
         if (overlappingAppts == 0) {
             try {
@@ -292,7 +292,7 @@ public abstract class AppointmentsDAO {
 
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Error");
-            alert.setContentText("Appointment could not be added because of overlapping appointment(s).");
+            alert.setContentText("Appointment could not be added because of technician overlapping appointment(s).");
             alert.showAndWait();
             return apptId;
         }
@@ -318,7 +318,7 @@ public abstract class AppointmentsDAO {
     public static int updateAppt(int apptId, int custId, int advisorId, int techId, String type, String concerns, Timestamp startTimestamp, Timestamp endTimestamp ) {
         Alert alert;
         int rowsAffected = 0;
-        int overlappingAppts = modifyOverlapCheck(custId, apptId, startTimestamp, endTimestamp);
+        int overlappingAppts = modifyOverlapCheck(techId, apptId, startTimestamp, endTimestamp);
 
         if (overlappingAppts == 0) {
             alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to edit appointment #" + apptId + "?");
@@ -353,7 +353,7 @@ public abstract class AppointmentsDAO {
         else {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Update Error");
-            alert.setContentText("Appointment could not be updated because of overlapping appointment(s).");
+            alert.setContentText("Appointment could not be updated because of technician overlapping appointment(s).");
             alert.showAndWait();
             return rowsAffected;
         }
@@ -402,26 +402,26 @@ public abstract class AppointmentsDAO {
 
     /**
      * This method checks for overlapping appointments for a new appointment in the database and returns the number of
-     * overlapping rows. It takes in a customerId and start/end timestamps to check against other appointments the
-     * customer has scheduled.
-     * @param newCustId integer customerId to check appointments for
+     * overlapping rows. It takes in a techId and start/end timestamps to check against other appointments the
+     * tech has scheduled.
+     * @param newTechId integer techId to check appointments for
      * @param start Timestamp of start time of new appointment
      * @param end Timestamp of end time of new appointment
      * @return integer overlappingRows
      */
-    public static int overlapCheck(int newCustId, Timestamp start, Timestamp end) {
+    public static int overlapCheck(int newTechId, Timestamp start, Timestamp end) {
         int overlappingRows = 0;
 
         try {
             // SQL statement to check for customer id with conflicting appointment times
-            String sql = "SELECT * FROM appointments WHERE Customer_ID = ? AND (((? >= Start) AND (? < End)) OR " +
+            String sql = "SELECT * FROM appointments WHERE Contact_ID = ? AND (((? >= Start) AND (? < End)) OR " +
                     "((? > START) AND (? <= End)) OR ((? <= Start) AND (? >= End)))";
 
             // Get connection to DB and send over the SQL
             PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
 
             // Call prepared statement setter method to assign bind variables value
-            ps.setInt(1, newCustId);
+            ps.setInt(1, newTechId);
             ps.setTimestamp(2, start);
             ps.setTimestamp(3, start);
             ps.setTimestamp(4, end);
@@ -448,22 +448,22 @@ public abstract class AppointmentsDAO {
     }
 
     /**
-     * This method checks for overlapping appointments for a customer in the database while leaving out the appointment
+     * This method checks for overlapping appointments for a technician in the database while leaving out the appointment
      * that is being modified so that it doesn't interfere with the check, and returns the number of overlapping
-     * rows. It takes in a customerId, the existing appointment id to leave out of the check, and start/end timestamps
-     * to check against other appointments the customer has scheduled.
-     * @param existingCustId integer customerId to check appointments for
+     * rows. It takes in a techId, the existing appointment id to leave out of the check, and start/end timestamps
+     * to check against other appointments the technician has scheduled.
+     * @param existingTechId integer customerId to check appointments for
      * @param existingApptId integer apptId to leave out of the check
      * @param start Timestamp of start time of appointment
      * @param end Timestamp of end time of appointment
      * @return integer overlappingRows
      */
-    public static int modifyOverlapCheck(int existingCustId, int existingApptId, Timestamp start, Timestamp end) {
+    public static int modifyOverlapCheck(int existingTechId, int existingApptId, Timestamp start, Timestamp end) {
         int overlappingRows = 0;
 
         try {
             // SQL statement to check if overlapping appointments
-            String sql = "SELECT * FROM appointments WHERE Appointment_ID != ? AND (Customer_ID = ? AND (((? >= Start) AND (? < End)) " +
+            String sql = "SELECT * FROM appointments WHERE Appointment_ID != ? AND (Contact_ID = ? AND (((? >= Start) AND (? < End)) " +
                     "OR ((? > START) AND (? <= End)) OR ((? <= Start) AND (? >= End))))";
 
             // Get connection to DB and send over the SQL
@@ -471,7 +471,7 @@ public abstract class AppointmentsDAO {
 
             // Call prepared statement setter method to assign bind variables value
             ps.setInt(1, existingApptId);
-            ps.setInt(2, existingCustId);
+            ps.setInt(2, existingTechId);
             ps.setTimestamp(3, start);
             ps.setTimestamp(4, start);
             ps.setTimestamp(5, end);
@@ -608,6 +608,9 @@ public abstract class AppointmentsDAO {
         return numAppts;
     }
 
+    /**
+     * This method updates information for capstone use with the C195 database
+     */
     public static void updateTypesAndConcerns() {
         int i = 1;
         String type;
