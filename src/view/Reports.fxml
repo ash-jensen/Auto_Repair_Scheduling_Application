@@ -51,6 +51,89 @@
             </HBox>
             <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="839.0" style="-fx-background-color: transparent; -fx-font: 13px &quot;Arial&quot;; -fx-border-color: black;" tabClosingPolicy="UNAVAILABLE">
                <tabs>
+                  <Tab text="Tech Schedule">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="39.0" prefWidth="837.0">
+                                 <children>
+                                    <Label text="Technican Schedule">
+                                       <font>
+                                          <Font name="Arial Bold" size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="45.0" prefWidth="838.0">
+                                 <children>
+                                    <GridPane alignment="TOP_RIGHT" hgap="5.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="279.0" vgap="5.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Technician">
+                                             <font>
+                                                <Font name="Arial" size="13.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="25.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <ComboBox fx:id="TechComboBox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </GridPane>
+                                    <GridPane alignment="TOP_RIGHT" hgap="5.0" layoutX="10.0" layoutY="25.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="157.0" vgap="5.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#TechSchedOkayButtonAction" prefWidth="100.0" style="-fx-background-color: #2a70c7#2a70c7 #2a70c7#2a70c7;" text="OK" textFill="WHITE">
+                                             <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView fx:id="ApptsTable" prefHeight="358.0" prefWidth="837.0" style="-fx-background-color: transparent;">
+                                 <columns>
+                                    <TableColumn fx:id="ApptIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="ApptID" />
+                                    <TableColumn fx:id="CustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
+                                    <TableColumn fx:id="AdvisorIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Advisor" />
+                                    <TableColumn fx:id="TechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
+                                    <TableColumn fx:id="TypeCol" maxWidth="96.0" minWidth="96.0" prefWidth="96.0" text="Type" />
+                                    <TableColumn fx:id="ConcernsCol" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Service/Concerns" />
+                                    <TableColumn fx:id="StartDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Start Date/Time" />
+                                    <TableColumn fx:id="EndDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="End Date/Time" />
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
                   <Tab text="Num Appointments">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -156,89 +239,6 @@
                                     <Insets top="15.0" />
                                  </VBox.margin>
                               </HBox>
-                           </children>
-                        </VBox>
-                     </content>
-                  </Tab>
-                  <Tab text="Tech Schedule">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="39.0" prefWidth="837.0">
-                                 <children>
-                                    <Label text="Schedule by Contact">
-                                       <font>
-                                          <Font name="Arial Bold" size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="10.0" top="15.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="45.0" prefWidth="838.0">
-                                 <children>
-                                    <GridPane alignment="TOP_RIGHT" hgap="5.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="279.0" vgap="5.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label text="Technician">
-                                             <font>
-                                                <Font name="Arial" size="13.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="25.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <ComboBox fx:id="TechComboBox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </GridPane>
-                                    <GridPane alignment="TOP_RIGHT" hgap="5.0" layoutX="10.0" layoutY="25.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="157.0" vgap="5.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#TechSchedOkayButtonAction" prefWidth="100.0" style="-fx-background-color: #2a70c7#2a70c7 #2a70c7#2a70c7;" text="OK" textFill="WHITE">
-                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
-                                             </font>
-                                          </Button>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <TableView fx:id="ApptsTable" prefHeight="358.0" prefWidth="837.0" style="-fx-background-color: transparent;">
-                                 <columns>
-                                    <TableColumn fx:id="ApptIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="ApptID" />
-                                    <TableColumn fx:id="CustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
-                                    <TableColumn fx:id="AdvisorIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Advisor" />
-                                    <TableColumn fx:id="TechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
-                                    <TableColumn fx:id="TypeCol" maxWidth="96.0" minWidth="96.0" prefWidth="96.0" text="Type" />
-                                    <TableColumn fx:id="ConcernsCol" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Service/Concerns" />
-                                    <TableColumn fx:id="StartDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Start Date/Time" />
-                                    <TableColumn fx:id="EndDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="End Date/Time" />
-                                 </columns>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </TableView>
                            </children>
                         </VBox>
                      </content>
