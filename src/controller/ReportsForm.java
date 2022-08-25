@@ -44,10 +44,12 @@ public class ReportsForm implements Initializable {
     public ComboBox TechComboBox;
     public Label CustomerNumbers;
     public ComboBox ApptTypeComboBox;
+    public TableColumn TypeCol;
     private ObservableList<String> monthsOfYear = observableArrayList();
     private ObservableList<String> apptTypeList = observableArrayList();
     private ObservableList<Tech> techList = observableArrayList();
     private ObservableList<Customer> customerList = observableArrayList();
+    private ObservableList<Appointment> apptList = observableArrayList();
 
     /**
      * This method initializes ReportsForm.
@@ -74,10 +76,15 @@ public class ReportsForm implements Initializable {
         MonthComboBox.setVisibleRowCount(12);
         MonthComboBox.setItems(monthsOfYear);
 
-        // Fill tech combo box
+        // Fill type combo box
         apptTypeList = Appointment.getAllApptTypes();
         ApptTypeComboBox.setVisibleRowCount(5);
         ApptTypeComboBox.setItems(apptTypeList);
+
+        // Fill tech combo box
+        techList = TechDAO.getTechData();
+        TechComboBox.setVisibleRowCount(5);
+        TechComboBox.setItems(techList);
     }
 
     /**
@@ -131,7 +138,6 @@ public class ReportsForm implements Initializable {
      * return number of appointments matching that month and appointment type, otherwise alerts nothing found.
      * @param actionEvent on OK button click
      */
-
     public void NumApptsOkayButtonAction(ActionEvent actionEvent) {
 
         Alert alert;
@@ -161,27 +167,28 @@ public class ReportsForm implements Initializable {
      * the table with the information.
      * @param actionEvent on OK button click
      */
-    public void ContactSchedOkayButtonAction(ActionEvent actionEvent) {
+    public void TechSchedOkayButtonAction(ActionEvent actionEvent) {
         Alert alert;
-        ObservableList<Appointment> techList = observableArrayList();
 
         // Get selection
         int techId = ((Tech)TechComboBox.getSelectionModel().getSelectedItem()).getId();
 
         // Get returned contact list by id
-        techList = AppointmentsDAO.getTechApptData(techId);
+        apptList = AppointmentsDAO.getTechApptData(techId);
 
         // If contacts returned, fill table, else warn user none found
-        if (techList.size() > 0) {
+        if (apptList.size() > 0) {
             // Populate Appointments table on schedule form
-            ApptsTable.setItems(techList);
+            ApptsTable.setItems(apptList);
             ApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             CustIdCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
             AdvisorIdCol.setCellValueFactory(new PropertyValueFactory<>("advisorId"));
             TechIdCol.setCellValueFactory(new PropertyValueFactory<>("techId"));
+            TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+            ConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
             StartDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startString"));
             EndDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endString"));
-            ConcernsCol.setCellValueFactory(new PropertyValueFactory<>("concerns"));
+
         }
         else {
             // Alert user: no appointments found

@@ -160,7 +160,7 @@
                         </VBox>
                      </content>
                   </Tab>
-                  <Tab text="Contact Schedule">
+                  <Tab text="Tech Schedule">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
@@ -190,7 +190,7 @@
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Label text="Contact">
+                                          <Label text="Technician">
                                              <font>
                                                 <Font name="Arial" size="13.0" />
                                              </font>
@@ -198,7 +198,7 @@
                                                 <Insets left="25.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <ComboBox fx:id="ContactComboBox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="TechComboBox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
                                        </children>
                                        <HBox.margin>
                                           <Insets />
@@ -212,7 +212,7 @@
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ContactSchedOkayButtonAction" prefWidth="100.0" style="-fx-background-color: #2a70c7#2a70c7 #2a70c7#2a70c7;" text="OK" textFill="WHITE">
+                                          <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#TechSchedOkayButtonAction" prefWidth="100.0" style="-fx-background-color: #2a70c7#2a70c7 #2a70c7#2a70c7;" text="OK" textFill="WHITE">
                                              <font>
                                                 <Font name="Arial Bold" size="13.0" />
                                              </font>
@@ -226,16 +226,14 @@
                               </HBox>
                               <TableView fx:id="ApptsTable" prefHeight="358.0" prefWidth="837.0" style="-fx-background-color: transparent;">
                                  <columns>
-                                    <TableColumn fx:id="ApptIdCol" maxWidth="58.0" minWidth="-Infinity" prefWidth="58.0" text="ApptID" />
-                                    <TableColumn fx:id="CustIdCol" maxWidth="81.0" minWidth="69.0" prefWidth="69.0" text="Customer" />
-                                    <TableColumn fx:id="UserIdCol" maxWidth="58.0" minWidth="-Infinity" prefWidth="58.0" text="User" />
-                                    <TableColumn fx:id="ContactIdCol" maxWidth="58.0" minWidth="-Infinity" prefWidth="58.0" text="Contact" />
-                                    <TableColumn fx:id="TitleCol" maxWidth="86.0" minWidth="86.0" prefWidth="86.0" text="Title" />
-                                    <TableColumn fx:id="LocationCol" maxWidth="86.0" minWidth="86.0" prefWidth="86.0" text="Location" />
-                                    <TableColumn fx:id="StartDateTimeCol" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" text="Start Date/Time" />
-                                    <TableColumn fx:id="EndDateTimeCol" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" text="End Date/Time" />
-                                    <TableColumn fx:id="TypeCol" maxWidth="86.0" minWidth="86.0" prefWidth="86.0" text="Type" />
-                                    <TableColumn fx:id="DescriptionCol" prefWidth="108.0" text="Description" />
+                                    <TableColumn fx:id="ApptIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="ApptID" />
+                                    <TableColumn fx:id="CustIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Customer" />
+                                    <TableColumn fx:id="AdvisorIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Advisor" />
+                                    <TableColumn fx:id="TechIdCol" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Tech" />
+                                    <TableColumn fx:id="TypeCol" maxWidth="96.0" minWidth="96.0" prefWidth="96.0" text="Type" />
+                                    <TableColumn fx:id="ConcernsCol" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Service/Concerns" />
+                                    <TableColumn fx:id="StartDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Start Date/Time" />
+                                    <TableColumn fx:id="EndDateTimeCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="End Date/Time" />
                                  </columns>
                                  <VBox.margin>
                                     <Insets top="15.0" />
