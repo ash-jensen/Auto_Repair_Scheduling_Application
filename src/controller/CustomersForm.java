@@ -389,7 +389,7 @@ public class CustomersForm implements Initializable {
         // Search part list for Part Name
         searchedCustomers = CustomerDAO.getCustomersByName(toSearch);
 
-        // if string match not found, try changing to int and search for Part ID
+        // if string match not found, try changing to int and search for Cust ID
         if(searchedCustomers.size() == 0) {
             try{
                 int custId = Integer.parseInt(toSearch);
@@ -403,7 +403,6 @@ public class CustomersForm implements Initializable {
             }
         }
 
-
         // If searched item not found, alert user and reload table
         if (searchedCustomers.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -416,14 +415,14 @@ public class CustomersForm implements Initializable {
             return;
         }
 
-            // Set part table to display list of matching parts
-            CustTable.setItems(searchedCustomers);
-            CustTableId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            CustTableName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            CustTableAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-            CustTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-            CustTablePhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-            CustTableVin.setCellValueFactory(new PropertyValueFactory<>("vin"));
-            CustTableDivId.setCellValueFactory(new PropertyValueFactory<>("divId"));
+        // Set part table to display list of matching parts
+        CustTable.setItems(searchedCustomers);
+        CustTableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        CustTableName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        CustTableAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        CustTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        CustTablePhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        CustTableVin.setCellValueFactory(new PropertyValueFactory<>("vin"));
+        CustTableDivId.setCellValueFactory(new PropertyValueFactory<>("divId"));
     }
 }

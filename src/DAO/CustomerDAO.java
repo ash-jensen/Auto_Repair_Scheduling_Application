@@ -23,7 +23,6 @@ public abstract class CustomerDAO {
     private static ObservableList<Customer> customerList = observableArrayList();
     private static ObservableList<Customer> customersByName = observableArrayList();
     private static ObservableList<Customer> customersById = observableArrayList();
-    private static Customer customer;
 
     /**
      * This method makes an ObservableList of customers using data from the database. It gets Customer_ID, Customer_Name,
@@ -226,21 +225,24 @@ public abstract class CustomerDAO {
             ResultSet rs = ps.executeQuery();
 
             // Set bind variables to create customer object, add customer to list
-            rs.next();
-            String custName = rs.getString("Customer_Name");
-            String custAddress = rs.getString("Address");
-            String custPostalCode = rs.getString("Postal_Code");
-            String custPhoneNumber = rs.getString("Phone");
-            String custVin = rs.getString("Created_By");
-            int custDivId = rs.getInt("Division_ID");
-            customer = new Customer(custIdToFind, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
+            if (rs.next()) {
+                String custName = rs.getString("Customer_Name");
+                String custAddress = rs.getString("Address");
+                String custPostalCode = rs.getString("Postal_Code");
+                String custPhoneNumber = rs.getString("Phone");
+                String custVin = rs.getString("Created_By");
+                int custDivId = rs.getInt("Division_ID");
+                Customer customer = new Customer(custIdToFind, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
+                return customer;
+            }
+            return null;
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         // Return customer from db
-        return customer;
+        return null;
     }
 
     /**
@@ -283,45 +285,6 @@ public abstract class CustomerDAO {
 
         // Return customer from db
         return customersByName;
-    }
-
-    /**
-     * This method finds customers by their id number in the database and returns a list of matching customers. It takes
-     * int custIdToFind and searches the database, then makes a Customer object and adds it to the list to return
-     * @param custIdToFind the int customer id to find in the database
-     * @return observableList of customers with matching id numbers
-     */
-    public static ObservableList<Customer> getCustomersById(int custIdToFind) {
-        try {
-            // SQL statement to get all customers from customer table
-            String sql = "SELECT * FROM customers WHERE Customer_ID LIKE ?";
-
-            // Get a connection to DB and send over the SQL
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
-            ps.setString(1, "%" + custIdToFind + "%");
-
-            // Get results of query
-            ResultSet rs = ps.executeQuery();
-
-            // Set bind variables to create customer object, add customer to list
-            while(rs.next()) {
-                int custId = rs.getInt("Customer_ID");
-                String custName = rs.getString("Customer_Name");
-                String custAddress = rs.getString("Address");
-                String custPostalCode = rs.getString("Postal_Code");
-                String custPhoneNumber = rs.getString("Phone");
-                String custVin = rs.getString("Created_By");
-                int custDivId = rs.getInt("Division_ID");
-                Customer customer = new Customer(custId, custName, custAddress, custPostalCode, custPhoneNumber, custVin, custDivId);
-                customersById.add(customer);
-            }
-        }
-        catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        // Return customer from db
-        return customersById;
     }
 
     /**
