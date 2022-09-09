@@ -402,7 +402,7 @@ public class AppointmentForm implements Initializable {
                     populateApptsTables();
                     // Confirm customer added
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Add Customer");
+                    alert.setTitle("Add Appointment");
                     alert.setContentText("Appointment #" + apptId + " has been added.");
                     alert.showAndWait();
 

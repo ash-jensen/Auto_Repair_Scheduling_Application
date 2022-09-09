@@ -243,7 +243,7 @@
                         </VBox>
                      </content>
                   </Tab>
-                  <Tab text="Customers">
+                  <Tab text="Num Customers">
                      <content />
                      <VBox prefHeight="200.0" prefWidth="100.0">
                         <children>
