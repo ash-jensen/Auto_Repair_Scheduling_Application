@@ -1,4 +1,4 @@
-Appointment Scheduler
+Auto Repair Scheduling Application
 
 The purpose of the Auto Repair Scheduling application is to provide a GUI based appointment scheduling application for a
 local auto repair shop.  The password protected application gives the advisor the ability to create/update/delete customers
@@ -11,7 +11,7 @@ and confirmations throughout, including if form fields are not fully filled out 
 Author Information:
 Author: Ashley Jensen
 Contact Information: ajen147@wgu.edu
-Version: 1.1.3
+Version: 1.1.0
 Date: September 8, 2022
 
 IDE/JDK/JavaFX and MySQL Connector Versions:
