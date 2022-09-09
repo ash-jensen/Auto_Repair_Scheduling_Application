@@ -1,8 +1,8 @@
 Appointment Scheduler
 
-The purpose of the appointment scheduler is to provide a GUI based appointment scheduling application for a global
-consulting organization.  The password protected application gives the advisor the ability to create/update/delete customers
-and appointments from the company's chosen database system.  The application gives warning to a advisor if there is an
+The purpose of the Auto Repair Scheduling application is to provide a GUI based appointment scheduling application for a
+local auto repair shop.  The password protected application gives the advisor the ability to create/update/delete customers
+and appointments from the company's chosen database system.  The application gives warning to an advisor if there is an
 appointment within 15 minutes of the advisor's login, and shows them the appointment information should an appointment exist.
 The advisor is also able to view reports about the number of customers, the number of appointments a given tech has, and
 how many appointments of a certain type are in a chosen month. The appointment scheduler provides various error checking
@@ -12,7 +12,7 @@ Author Information:
 Author: Ashley Jensen
 Contact Information: ajen147@wgu.edu
 Version: 1.1.3
-Date: June 21, 2022
+Date: September 8, 2022
 
 IDE/JDK/JavaFX and MySQL Connector Versions:
 IDE: IntelliJ Community 2021.1
