@@ -10,7 +10,6 @@ and confirmations throughout, including if form fields are not fully filled out 
 
 Author Information:
 Author: Ashley Jensen
-Contact Information: ajen147@wgu.edu
 Version: 1.1.0
 Date: September 8, 2022
 
