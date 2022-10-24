@@ -28,6 +28,3 @@ Directions:
 5. View reports from Reports Form by clicking Reports Button
 6. View recorded log-in attempts by viewing login_activity.txt in program files in IntelliJ
 7. Exit program by clicking Exit button and confirming exit, or by clicking X in upper right-hand corner
-
-Report Description for A3f:
-This report tells the advisor how many customers are currently saved in the database.
