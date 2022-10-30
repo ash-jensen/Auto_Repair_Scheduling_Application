@@ -30,6 +30,4 @@ Directions:
 7. Exit program by clicking Exit button and confirming exit, or by clicking X in upper right-hand corner
 
 
-Below is the class diagram I created for the model componant of the MVC framework used to build the application:
-
 
